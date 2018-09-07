@@ -4,6 +4,7 @@ public class Viewport {
 	
 	private Northeast northeast;
 	private Southwest southwest;
+	
 	public Northeast getNortheast() {
 		return northeast;
 	}
