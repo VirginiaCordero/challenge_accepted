@@ -17,7 +17,5 @@ public class Viewport {
 	public void setSouthwest(Southwest southwest) {
 		this.southwest = southwest;
 	}
-	
-	
 
 }
