@@ -2,20 +2,21 @@ package co.grandcircus.challengeaccepted.model.googleplaces;
 
 public class Location {
 	
-	private Float lat;
-	private Float lng;
+	private Double lat;
+	private Double lng;
 	
-	public Float getLat() {
+	public Double getLat() {
 		return lat;
 	}
-	public void setLat(Float lat) {
+	public void setLat(Double lat) {
 		this.lat = lat;
 	}
-	public Float getLng() {
+	public Double getLng() {
 		return lng;
 	}
-	public void setLng(Float lng) {
+	public void setLng(Double lng) {
 		this.lng = lng;
 	}
-
+	
+	
 }

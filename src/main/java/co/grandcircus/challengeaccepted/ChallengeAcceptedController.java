@@ -1,5 +1,5 @@
 package co.grandcircus.challengeaccepted;
 
-public class ChallengeAceeptedController {
+public class ChallengeAcceptedController {
 
 }

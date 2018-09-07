@@ -22,13 +22,11 @@ public class Result {
 	@JsonProperty("plus_code")
 	private PlusCode plusCode;
 	
-	private Float rating;
+	private Double rating;
 	private String reference;
 	private String scope;
 	private List<String> type;
 	private String vicinity;
-	
-	
 	public Geometry getGeometry() {
 		return geometry;
 	}
@@ -77,10 +75,10 @@ public class Result {
 	public void setPlusCode(PlusCode plusCode) {
 		this.plusCode = plusCode;
 	}
-	public Float getRating() {
+	public Double getRating() {
 		return rating;
 	}
-	public void setRating(Float rating) {
+	public void setRating(Double rating) {
 		this.rating = rating;
 	}
 	public String getReference() {
