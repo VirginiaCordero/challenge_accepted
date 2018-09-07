@@ -14,4 +14,9 @@ public class NearbySearchResults {
 		this.results = results;
 	}
 
+	@Override
+	public String toString() {
+		return "NearbySearchResults [results=" + results + "]";
+	}
+
 }
