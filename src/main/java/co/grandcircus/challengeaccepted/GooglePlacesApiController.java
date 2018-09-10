@@ -34,5 +34,8 @@ public class GooglePlacesApiController {
 		return null;
 		
 	}
+	
+//	@RequestMapping("/")
+//	public ModelAndView apiTest2
 
 }
