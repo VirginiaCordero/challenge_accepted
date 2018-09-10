@@ -18,10 +18,11 @@ public class Group {
 	private String name;
 	private String description;
 
-	@OneToMany(mappedBy = "group")
+	
+	@OneToMany(mappedBy="group")
 	private Set<Challenge> challenges;
 
-	@ManyToMany(mappedBy = "groups")
+	@ManyToMany(mappedBy="groups")
 	private Set<User> users;
 
 	public Long getId() {

@@ -22,6 +22,8 @@ public class Challenge {
 
 	@ManyToOne
 	private Group group;
+	
+	// TODO: OneToMany Set<UserChallenge) mappedBy=challenge
 
 	public String getName() {
 		return name;

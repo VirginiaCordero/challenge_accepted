@@ -23,12 +23,17 @@ public class User {
 	private Integer priceMin;
 	private Integer priceMax;
 	private String location;
-
+	
 	@ManyToMany
-	@JoinTable(name = "user_group", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "group_id") })
+	@JoinTable(
+			name = "user_group",
+			joinColumns = { @JoinColumn(name = "user_id") },
+			inverseJoinColumns = { @JoinColumn(name = "group_id") }
+		)
 	private Set<Group> groups;
-
+	
+	// TODO: one to many Set<UserChallenge> mappedBy = user
+	
 	public Long getId() {
 		return id;
 	}
