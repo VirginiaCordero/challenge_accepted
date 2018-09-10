@@ -1,4 +1,4 @@
-package co.grandcricus.challengeaccepted.entity;
+package co.grandcircus.challengeaccepted.entity;
 
 import java.util.Set;
 
@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 public class Group {
@@ -17,7 +18,6 @@ public class Group {
 	private Long id;
 	private String name;
 	private String description;
-
 	
 	@OneToMany(mappedBy="group")
 	private Set<Challenge> challenges;

@@ -1,18 +1,22 @@
-package co.grandcricus.challengeaccepted.entity;
+package co.grandcircus.challengeaccepted.entity;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Challenge {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	private String name;
 	private String description;
 	private String location;
@@ -21,9 +25,19 @@ public class Challenge {
 	private String type;
 
 	@ManyToOne
+	@JoinColumn(name="group_id")
 	private Group group;
-	
-	// TODO: OneToMany Set<UserChallenge) mappedBy=challenge
+
+	@OneToMany(mappedBy="challenge")
+	private Set<UserChallenge> userChallenges;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -79,6 +93,14 @@ public class Challenge {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public Set<UserChallenge> getUserChallenges() {
+		return userChallenges;
+	}
+
+	public void setUserChallenges(Set<UserChallenge> userChallenges) {
+		this.userChallenges = userChallenges;
 	}
 	
 }

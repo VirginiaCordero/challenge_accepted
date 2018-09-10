@@ -1,4 +1,4 @@
-package co.grandcricus.challengeaccepted.entity;
+package co.grandcircus.challengeaccepted.entity;
 
 import java.util.Set;
 
@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -31,9 +32,10 @@ public class User {
 			inverseJoinColumns = { @JoinColumn(name = "group_id") }
 		)
 	private Set<Group> groups;
-	
-	// TODO: one to many Set<UserChallenge> mappedBy = user
-	
+		
+	@OneToMany(mappedBy="user")
+	private Set<UserChallenge> userChallenges;
+
 	public Long getId() {
 		return id;
 	}
@@ -106,4 +108,12 @@ public class User {
 		this.groups = groups;
 	}
 
+	public Set<UserChallenge> getUserChallenges() {
+		return userChallenges;
+	}
+
+	public void setUserChallenges(Set<UserChallenge> userChallenges) {
+		this.userChallenges = userChallenges;
+	}
+	
 }
