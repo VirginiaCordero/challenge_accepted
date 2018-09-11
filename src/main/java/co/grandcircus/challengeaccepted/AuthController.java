@@ -28,7 +28,7 @@ public class AuthController {
 	// get the username and password from the form when it's submitted.
 	public ModelAndView submitLoginForm(@RequestParam("email") String email, @RequestParam("password") String password,
 			HttpSession session, RedirectAttributes redir) {
-		// Find the matching user.
+		// Find the matchings user.
 		User user = userDao.findByEmail(email);
 		if (user == null || !password.equals(user.getPassword())) {
 			// If the user or password don't match, display an error message.
@@ -41,9 +41,9 @@ public class AuthController {
 		session.setAttribute("user", user);
 		
 		// A flash message will only show on the very next page. Then it will go away.
-		// It is useful with redirects since you can't add attributes to the mav.
+		// It is useful with redirects sinsce you can't add attributes to the mav.
 		redir.addFlashAttribute("message", "Logged in.");
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/dashboard");
 	}
 	
 	@RequestMapping("/logout")
