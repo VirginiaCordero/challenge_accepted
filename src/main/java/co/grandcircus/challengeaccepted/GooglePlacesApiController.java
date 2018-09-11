@@ -1,5 +1,7 @@
 package co.grandcircus.challengeaccepted;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,10 +12,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.challengeaccepted.dao.ChallengeDao;
+import co.grandcircus.challengeaccepted.dao.GroupDao;
 import co.grandcircus.challengeaccepted.entity.Challenge;
+import co.grandcircus.challengeaccepted.entity.Group;
 import co.grandcircus.challengeaccepted.model.googleplaces.NearbySearchResults;
 import co.grandcircus.challengeaccepted.model.googleplaces.PlaceDetailResult;
-import co.grandcircus.challengeaccepted.model.googleplaces.Southwest;
 
 @Controller
 public class GooglePlacesApiController {
@@ -23,6 +26,9 @@ public class GooglePlacesApiController {
 	
 	@Autowired
 	private ChallengeDao challengeDao;
+	
+	@Autowired
+	private GroupDao groupDao;
 	
 	@RequestMapping("/nearby-search")
 	public ModelAndView apiTest(@RequestParam(value="keyword", required=false) String keyword) {
@@ -66,6 +72,12 @@ public class GooglePlacesApiController {
 	@PostMapping("/create-challenge")
 	public ModelAndView addChallenge(Challenge challenge) {
 		
+		
+		List<Group> groups = groupDao.findAll();
+				
+		
+		challenge.setGroup(groups.get(0));
+		challenge.setCreationDate(System.currentTimeMillis());
 		challengeDao.save(challenge);
 		
 		ModelAndView mav = new ModelAndView("redirect:/nearby-search?keyword=taco");
