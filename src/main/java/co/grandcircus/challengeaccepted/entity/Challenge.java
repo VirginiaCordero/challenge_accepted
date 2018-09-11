@@ -20,9 +20,10 @@ public class Challenge {
 	private String name;
 	private String description;
 	private String location;
-	private LocalDate creationDate;
+	private Long creationDate;
 	private LocalDate expirationDate;
 	private String type;
+	private String placeId;
 
 	@ManyToOne
 	@JoinColumn(name="group_id")
@@ -63,11 +64,11 @@ public class Challenge {
 		this.location = location;
 	}
 
-	public LocalDate getCreationDate() {
+	public Long getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(LocalDate creationDate) {
+	public void setCreationDate(Long creationDate) {
 		this.creationDate = creationDate;
 	}
 
@@ -85,6 +86,14 @@ public class Challenge {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getPlaceId() {
+		return placeId;
+	}
+
+	public void setPlaceId(String placeId) {
+		this.placeId = placeId;
 	}
 
 	public Group getGroup() {
