@@ -24,6 +24,10 @@ public class User {
 	private Integer priceMin;
 	private Integer priceMax;
 	private String location;
+	private Integer zipCode;
+	
+	@OneToMany(mappedBy="user")
+	private Set<Challenge> challenges;
 	
 	@ManyToMany
 	@JoinTable(
@@ -114,6 +118,14 @@ public class User {
 
 	public void setUserChallenges(Set<UserChallenge> userChallenges) {
 		this.userChallenges = userChallenges;
+	}
+
+	public Integer getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(Integer zipCode) {
+		this.zipCode = zipCode;
 	}
 	
 }

@@ -26,6 +26,9 @@ public class Challenge {
 
 	@ManyToOne
 	private Group group;
+	
+	@ManyToOne
+	private User user;
 
 	@OneToMany(mappedBy="challenge")
 	private Set<UserChallenge> userChallenges;
@@ -100,6 +103,14 @@ public class Challenge {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Set<UserChallenge> getUserChallenges() {
