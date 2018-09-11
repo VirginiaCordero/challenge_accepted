@@ -41,6 +41,7 @@
 						<tr>
 							<th>Name</th>
 							<th>Rating</th>
+							<th>Create Challenge</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -48,7 +49,7 @@
 							<tr>
 								<td>${ result.name }</td>
 								<td>${ result.rating }</td>
-								<td>${ result.placeId }</td>
+								<td><a href="/create-challenge?placeId=${ result.placeId }">Challenge!</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
