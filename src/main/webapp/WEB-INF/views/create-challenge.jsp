@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +14,16 @@
 		<p>
 			<label for="name">Name: </label>
 			<input type="text" id="name" name="name">
+		</p>
+		<p>
+			<label for="group">Group: </label>
+			<select required id="group" name="group">
+				<option value="">Select Group</option>
+				
+				<c:forEach items="${ groups }" var="group">
+					<option value="${ group.id }">${ group.name }</option>
+				</c:forEach>
+			</select>
 		</p>
 		<p>
 			<label for="description">Description: </label>
