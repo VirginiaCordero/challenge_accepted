@@ -1,5 +1,6 @@
 package co.grandcircus.challengeaccepted;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -8,7 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import co.grandcircus.challengeaccepted.entity.User;
 
 
-
+@Controller
 public class MemberController {
 	@RequestMapping("/dashboard")
 	public ModelAndView index(@SessionAttribute(name="user", required=false) User user, RedirectAttributes redir) {

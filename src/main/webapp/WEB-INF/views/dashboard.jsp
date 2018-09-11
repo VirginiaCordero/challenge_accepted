@@ -13,7 +13,7 @@
 <body>
 
 	<h1>Psssssst...</h1>
-	
+	<p>${ user.firstName }</p>
 	<p>If you made it here, you must be logged in. Congratulations here's your reward...</p>
 	
 	<p class="secret">"Chuck Norris can kill two stones with one bird.",</p>
