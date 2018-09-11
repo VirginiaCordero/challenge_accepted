@@ -19,7 +19,7 @@ public class Group {
 	private String name;
 	private String description;
 	
-	@OneToMany(mappedBy="group")
+	@OneToMany(mappedBy="group", fetch=FetchType.EAGER)
 	private Set<Challenge> challenges;
 
 	@ManyToMany(mappedBy="groups", fetch=FetchType.EAGER)

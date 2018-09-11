@@ -27,7 +27,7 @@ public class User {
 	private String location;
 	private Integer zipCode;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
 	private Set<Challenge> challenges;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
@@ -38,7 +38,7 @@ public class User {
 		)
 	private Set<Group> groups;
 		
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
 	private Set<UserChallenge> userChallenges;
 
 	public Long getId() {
