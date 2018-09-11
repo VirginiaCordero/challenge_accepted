@@ -12,11 +12,18 @@
 </head>
 <body>
 
+<<<<<<< Updated upstream
 	<p>${ user.firstName } ${ user.lastName }</p>
 	<c:forEach items="${ user.groups }" var="group">
 		<p>${ group.name }</p>
 	</c:forEach>
 	
+=======
+	<h1>Psssssst...</h1>
+	<p>${ user.firstName }</p>
+	<p>${ user.groups }</p>
+	<p>If you made it here, you must be logged in. Congratulations here's your reward...</p>
+>>>>>>> Stashed changes
 	
 </body>
 </html>

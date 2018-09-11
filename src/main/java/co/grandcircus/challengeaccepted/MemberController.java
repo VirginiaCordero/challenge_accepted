@@ -21,6 +21,6 @@ public class MemberController {
 		}
 		
 		// if the user is logged in, proceed as normal.
-		return new ModelAndView("dashboard");
+		return new ModelAndView("/dashboard");
 	}
 }
