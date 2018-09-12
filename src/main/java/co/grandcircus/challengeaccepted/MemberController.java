@@ -74,15 +74,33 @@ public class MemberController {
 
 		UserChallenge accepted = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
 
-		mav.addObject("accepted", accepted);
-
 		mav.addObject("nextChallengeDetails", placeDetailResult);
 		mav.addObject("nextChallenge", nextChallenge);
+		mav.addObject("accepted", accepted);
 
 		return mav;
 	}
 
-	@PostMapping("/dashboard/join-group")
+
+	@PostMapping("/create-group")
+	public ModelAndView createGroup(@SessionAttribute(name = "user", required = false) User user,
+			RedirectAttributes redir, Group group) {
+		
+		// For this URL, make sure there is a user on the session.
+		if (user == null) {
+			// if not, send them back to the login page with a message.
+			redir.addFlashAttribute("message", "Wait! Please log in.");
+			return new ModelAndView("redirect:/login");
+		}
+		
+		groupDao.save(group);
+		
+		redir.addFlashAttribute("You have created the group:" + group.getName() + "!");
+		return new ModelAndView("redirect:/dashboard");
+	
+	}
+
+	@PostMapping("/join-group")
 	public ModelAndView joinGroupFromDashboard(@SessionAttribute(name = "user", required = false) User user,
 			Group group, HttpSession session, RedirectAttributes redir) {
 		// For this URL, make sure there is a user on the session.
@@ -101,7 +119,8 @@ public class MemberController {
 		return new ModelAndView("redirect:/dashboard");
 	}
 
-	@PostMapping("/dashboard/leave-group")
+
+	@PostMapping("/leave-group")
 	public ModelAndView leaveGroupFromDashboard(@SessionAttribute(name = "user", required = false) User user,
 			Group group, HttpSession session, RedirectAttributes redir) {
 		// For this URL, make sure there is a user on the session.
