@@ -66,5 +66,6 @@
 	<a href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge Accepted</a>
 	<a href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Challenge Nah</a>
 	
+	<p>${ accepted }</p>
 </body>
 </html>

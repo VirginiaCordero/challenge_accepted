@@ -72,6 +72,10 @@ public class MemberController {
 
 		}
 
+		UserChallenge accepted = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
+
+		mav.addObject("accepted", accepted);
+
 		mav.addObject("nextChallengeDetails", placeDetailResult);
 		mav.addObject("nextChallenge", nextChallenge);
 

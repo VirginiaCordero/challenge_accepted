@@ -6,4 +6,6 @@ import co.grandcircus.challengeaccepted.entity.UserChallenge;
 
 public interface UserChallengeDao extends JpaRepository<UserChallenge, Long> {
 
+	UserChallenge findByUserIdEqualsAndStatusIs(Long userId, String status);
+
 }
