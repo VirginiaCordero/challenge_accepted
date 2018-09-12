@@ -60,7 +60,7 @@
 
 	<a href="/nearby-search">Select Location for a Challenge</a>
 
-	<c:forEach items="${ challenges }" var="challenge">
+	<c:forEach items="${ allMyChallenges }" var="challenge">
 		<p>${ challenge.name }</p>
 		<p>${ challenge.description }</p>
 	</c:forEach>

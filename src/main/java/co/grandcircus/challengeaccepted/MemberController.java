@@ -1,5 +1,7 @@
 package co.grandcircus.challengeaccepted;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +75,11 @@ public class MemberController {
 		}
 
 		UserChallenge accepted = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
-
+		
+		List<Challenge> myChallenges = challengeDao.findByGroupInOrderByCreationDateAsc(user.getGroups());
+		
 		mav.addObject("nextChallengeDetails", placeDetailResult);
+		mav.addObject("allMyChallenges", myChallenges);
 		mav.addObject("nextChallenge", nextChallenge);
 		mav.addObject("accepted", accepted);
 
