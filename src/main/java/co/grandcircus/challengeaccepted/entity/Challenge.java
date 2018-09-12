@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,13 +25,13 @@ public class Challenge {
 	private String type;
 	private String placeId;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Group group;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private User user;
 
-	@OneToMany(mappedBy="challenge")
+	@OneToMany(mappedBy="challenge", fetch=FetchType.EAGER)
 	private Set<UserChallenge> userChallenges;
 
 	public Long getId() {
