@@ -56,7 +56,11 @@
 		<p>${ challenge.description }</p>
 	</c:forEach>
 	
-	<p>Next Challenge: ${ nextChallenge.name }</p>
+	<p>Next Challenge: ${ nextChallenge.name }: ${ nextChallenge.description }</p>
+	<p>${ nextChallengeDetails.detailResult }</p>
+	<p>${ nextChallengeDetails.detailResult.formattedAddress}</p>
+	<p>${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
+	<p>${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>
 	
 </body>
 </html>

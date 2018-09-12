@@ -6,10 +6,12 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,10 +21,14 @@ import co.grandcircus.challengeaccepted.dao.UserDao;
 import co.grandcircus.challengeaccepted.entity.Challenge;
 import co.grandcircus.challengeaccepted.entity.Group;
 import co.grandcircus.challengeaccepted.entity.User;
+import co.grandcircus.challengeaccepted.model.googleplaces.PlaceDetailResult;
 
 
 @Controller
 public class MemberController {
+	
+	@Value("${google.api_key}")
+	private String apiKey;
 	
 	@Autowired
 	private GroupDao groupDao;
@@ -56,6 +62,17 @@ public class MemberController {
 		
 		Challenge nextChallenge = challengeDao.findFirstByGroupInOrderByCreationDateAsc(user.getGroups());
 		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
+					 "placeid=" + nextChallenge.getPlaceId() +
+					 "&key=" + apiKey;
+		
+		System.out.println(url);
+		
+		PlaceDetailResult placeDetailResult = restTemplate.getForObject(url, PlaceDetailResult.class);
+		
+		mav.addObject("nextChallengeDetails", placeDetailResult);
 		mav.addObject("nextChallenge", nextChallenge);
 		mav.addObject("challenges", challenges);
 	
