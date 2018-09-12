@@ -37,8 +37,11 @@ public class GooglePlacesApiController {
 
 		RestTemplate restTemplate = new RestTemplate();
 
-		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + location
-					 + "&radius=" + radius + "&keyword=" + keyword + "&key=" + apiKey;
+		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + 
+					 "location=" + location + 
+					 "&radius=" + radius + 
+					 "&keyword=" + keyword + 
+					 "&key=" + apiKey;
 
 		NearbySearchResults nearbySearchResults = restTemplate.getForObject(url, NearbySearchResults.class);
 

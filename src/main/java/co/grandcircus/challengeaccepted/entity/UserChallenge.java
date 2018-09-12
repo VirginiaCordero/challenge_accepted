@@ -1,7 +1,5 @@
 package co.grandcircus.challengeaccepted.entity;
 
-import java.time.LocalDate;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,8 +24,8 @@ public class UserChallenge {
 	@JoinColumn(name="challenge_id")
 	private Challenge challenge;
 	
-	private LocalDate responseDate;
-	private LocalDate outcomeDate;
+	private Long responseDate;
+	private Long outcomeDate;
 	private String status;
 	private Boolean like;
 	
@@ -49,16 +47,16 @@ public class UserChallenge {
 	public void setChallenge(Challenge challenge) {
 		this.challenge = challenge;
 	}
-	public LocalDate getResponseDate() {
+	public Long getResponseDate() {
 		return responseDate;
 	}
-	public void setResponseDate(LocalDate responseDate) {
+	public void setResponseDate(Long responseDate) {
 		this.responseDate = responseDate;
 	}
-	public LocalDate getOutcomeDate() {
+	public Long getOutcomeDate() {
 		return outcomeDate;
 	}
-	public void setOutcomeDate(LocalDate outcomeDate) {
+	public void setOutcomeDate(Long outcomeDate) {
 		this.outcomeDate = outcomeDate;
 	}
 	public String getStatus() {

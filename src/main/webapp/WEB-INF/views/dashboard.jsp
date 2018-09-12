@@ -57,10 +57,14 @@
 	</c:forEach>
 	
 	<p>Next Challenge: ${ nextChallenge.name }: ${ nextChallenge.description }</p>
-	<p>${ nextChallengeDetails.detailResult }</p>
+	
+	<h3>Challenge Details:</h3>
 	<p>${ nextChallengeDetails.detailResult.formattedAddress}</p>
 	<p>${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
 	<p>${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>
+	
+	<a href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge Accepted</a>
+	<a href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Challenge Nah</a>
 	
 </body>
 </html>
