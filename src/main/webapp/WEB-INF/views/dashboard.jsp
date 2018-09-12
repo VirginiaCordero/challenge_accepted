@@ -56,5 +56,7 @@
 		<p>${ challenge.description }</p>
 	</c:forEach>
 	
+	<p>Next Challenge: ${ nextChallenge.name }</p>
+	
 </body>
 </html>

@@ -3,6 +3,8 @@ package co.grandcircus.challengeaccepted;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.grandcircus.challengeaccepted.dao.ChallengeDao;
 import co.grandcircus.challengeaccepted.dao.GroupDao;
 import co.grandcircus.challengeaccepted.dao.UserDao;
 import co.grandcircus.challengeaccepted.entity.Challenge;
@@ -26,6 +29,9 @@ public class MemberController {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private ChallengeDao challengeDao;
 	
 	@RequestMapping("/dashboard")
 	public ModelAndView showDashboard(@SessionAttribute(name="user", required=false) User user, RedirectAttributes redir) {
@@ -47,7 +53,10 @@ public class MemberController {
 				challenges.add(challenge);
 			}
 		}
-				
+		
+		Challenge nextChallenge = challengeDao.findFirstByGroupInOrderByCreationDateAsc(user.getGroups());
+		
+		mav.addObject("nextChallenge", nextChallenge);
 		mav.addObject("challenges", challenges);
 	
 		return mav;
@@ -56,6 +65,7 @@ public class MemberController {
 	@PostMapping("/dashboard/join-group")
 	public ModelAndView joinGroupFromDashboard(@SessionAttribute(name="user", required=false) User user,
 											   Group group,
+											   HttpSession session,
 											   RedirectAttributes redir) {
 		// For this URL, make sure there is a user on the session.
 		if (user == null) {
@@ -64,16 +74,19 @@ public class MemberController {
 			return new ModelAndView("redirect:/login");
 		}
 		
-		user.getGroups().add(group);
-		userDao.save(user);
+		User dbUser = userDao.findById(user.getId()).orElse(null);
+		dbUser.getGroups().add(group);
+		userDao.save(dbUser);
+		session.setAttribute("user", dbUser);
 		
+		redir.addFlashAttribute("You have been added to " + group.getName() + "!");
 		return new ModelAndView("redirect:/dashboard");
 	}
 	
 	@PostMapping("/dashboard/leave-group")
-	// TODO: Currently broken
 	public ModelAndView leaveGroupFromDashboard(@SessionAttribute(name="user", required=false) User user,
 											   Group group,
+											   HttpSession session,
 											   RedirectAttributes redir) {
 		// For this URL, make sure there is a user on the session.
 		if (user == null) {
@@ -82,8 +95,10 @@ public class MemberController {
 			return new ModelAndView("redirect:/login");
 		}
 		
-		user.getGroups().remove(group);
-		userDao.save(user);
+		User dbUser = userDao.findById(user.getId()).orElse(null); // new managed entity "circle"
+		dbUser.getGroups().remove(group);
+		userDao.save(dbUser);
+		session.setAttribute("user", dbUser);
 		
 		return new ModelAndView("redirect:/dashboard");
 	}
