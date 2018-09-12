@@ -58,14 +58,6 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView("dashboard");
 		mav.addObject("groups", groupDao.findAll());
 		
-		// Iterate through the user's groups, and get all challenges for each group
-		List<Challenge> challenges = new ArrayList<Challenge>();		
-		for (Group group : user.getGroups()) {
-			for (Challenge challenge : group.getChallenges()) {
-				challenges.add(challenge);
-			}
-		}
-		
 		Challenge nextChallenge = challengeDao.findFirstByGroupInOrderByCreationDateAsc(user.getGroups());
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -80,7 +72,6 @@ public class MemberController {
 		
 		mav.addObject("nextChallengeDetails", placeDetailResult);
 		mav.addObject("nextChallenge", nextChallenge);
-		mav.addObject("challenges", challenges);
 	
 		return mav;
 	}
