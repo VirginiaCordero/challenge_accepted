@@ -47,6 +47,7 @@ public class MemberController {
 	public ModelAndView showDashboard(@SessionAttribute(name = "user", required = false) User user,
 			RedirectAttributes redir) {
 		// For this URL, make sure there is a user on the session.
+		System.out.println("Dashboard " + user);
 		if (user == null) {
 			// if not, send them back to the login page with a message.
 			redir.addFlashAttribute("message", "Wait! Please log in.");
@@ -63,16 +64,23 @@ public class MemberController {
 		
 		Challenge displayedChallenge = null;
 		
-		// if user has an accepted challenge
-		if (acceptedChallenge!=null) {
-			displayedChallenge = acceptedChallenge.getChallenge();
-		} else {
-			// Get list of user's challenges and look for a "fresh" challenge
-			List<Challenge> myChallenges = challengeDao.findByGroupInOrderByCreationDateAsc(user.getGroups());
-			for (Challenge challenge : myChallenges) {
-				if (userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(), challenge.getId())==null) {
-					displayedChallenge = challenge;
-					break;
+//		boolean userHasNoGroups = user.getGroups() == null || user.getGroups().isEmpty();
+//		boolean userHasGroups = !userHasNoGroups;
+		
+		boolean userHasGroups = user.getGroups() != null && !user.getGroups().isEmpty();
+		
+		if (userHasGroups) {
+			// if user has an accepted challenge
+			if (acceptedChallenge!=null) {
+				displayedChallenge = acceptedChallenge.getChallenge();
+			} else {
+				// Get list of user's challenges and look for a "fresh" challenge
+				List<Challenge> myChallenges = challengeDao.findByGroupInOrderByCreationDateAsc(user.getGroups());
+				for (Challenge challenge : myChallenges) {
+					if (userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(), challenge.getId())==null) {
+						displayedChallenge = challenge;
+						break;
+					}
 				}
 			}
 		}

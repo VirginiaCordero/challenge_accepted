@@ -128,5 +128,14 @@ public class User {
 	public void setZipCode(Integer zipCode) {
 		this.zipCode = zipCode;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", priceMin=" + priceMin + ", priceMax=" + priceMax + ", location="
+				+ location + ", zipCode=" + zipCode + "]";
+	}
+	
+	
 	
 }
