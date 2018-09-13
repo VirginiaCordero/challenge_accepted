@@ -58,7 +58,7 @@
 		</p>
 	</form>
 	
-	<p>Next Challenge: ${ nextChallenge.name }: ${ nextChallenge.description }</p>
+	<p>Next Challenge: ${ nextChallenge.name } -- ${ nextChallenge.description }</p>
 
 	<h3>Challenge Details:</h3>
 	<p>${ nextChallengeDetails.detailResult.formattedAddress}</p>
