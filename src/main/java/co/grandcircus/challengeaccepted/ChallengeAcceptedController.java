@@ -21,10 +21,11 @@ public class ChallengeAcceptedController {
 		return mav;
 	}
 
-	@PostMapping("/create-user")
+	@PostMapping("/registration")
 	public ModelAndView createUser(User user) {
 		userDao.save(user);
-		return new ModelAndView("redirect:/");
+		// TODO: add user to session, tricky
+		return new ModelAndView("redirect:/dashboard");
 	}
 
 }

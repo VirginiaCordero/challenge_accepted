@@ -23,13 +23,13 @@
 
             <div class="form-group"> 	 
                 <label for="firstname"><span class="req">* </span> First name: </label>
-                    <input class="form-control" type="text" name="firstname" id = "txt" onkeyup = "Validate(this)" required /> 
+                    <input class="form-control" type="text" name="firstName" id = "txt" onkeyup = "Validate(this)" required /> 
                         <div id="errFirst"></div>    
             </div>
 
             <div class="form-group">
                 <label for="lastname"><span class="req">* </span> Last name: </label> 
-                    <input class="form-control" type="text" name="lastname" id = "txt" onkeyup = "Validate(this)" placeholder="hyphen or single quote OK" required />  
+                    <input class="form-control" type="text" name="lastName" id = "txt" onkeyup = "Validate(this)" placeholder="hyphen or single quote OK" required />  
                         <div id="errLast"></div>
             </div>
 
@@ -55,7 +55,7 @@
                     <input required name="password" type="password" class="form-control inputpass" minlength="4" maxlength="16"  id="pass1" /> </p>
 
                 <label for="password"><span class="req">* </span> Password Confirm: </label>
-                    <input required name="password" type="password" class="form-control inputpass" minlength="4" maxlength="16" placeholder="Enter again to validate"  id="pass2" onkeyup="checkPass(); return false;" />
+                    <input required name="confirmPassword" type="password" class="form-control inputpass" minlength="4" maxlength="16" placeholder="Enter again to validate"  id="pass2" onkeyup="checkPass(); return false;" />
                         <span id="confirmMessage" class="confirmMessage"></span>
             </div>
 
