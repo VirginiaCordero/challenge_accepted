@@ -57,14 +57,7 @@
 			<button type="submit">Leave -</button>
 		</p>
 	</form>
-
-	<a href="/nearby-search">Select Location for a Challenge</a>
-
-	<c:forEach items="${ allMyChallenges }" var="challenge">
-		<p>${ challenge.name }</p>
-		<p>${ challenge.description }</p>
-	</c:forEach>
-
+	
 	<p>Next Challenge: ${ nextChallenge.name }: ${ nextChallenge.description }</p>
 
 	<h3>Challenge Details:</h3>
@@ -73,8 +66,8 @@
 	<p>${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>
 	
 	<a href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge Accepted</a>
-	<a href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Challenge Nah</a>
+	<a href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
+	<p><a href="/nearby-search">Select Location for a Challenge</a></p>
 	
-	<p>${ accepted }</p>
-</body>
+	</body>
 </html>

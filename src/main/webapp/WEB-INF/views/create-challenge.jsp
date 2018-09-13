@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<form method="post">
+	<form action="/create-challenge" method="post">
 		<p>
 			<label for="name">Name: </label>
 			<input type="text" id="name" name="name">

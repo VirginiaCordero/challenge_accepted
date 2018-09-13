@@ -72,7 +72,7 @@ public class GooglePlacesApiController {
 		challenge.setCreationDate(System.currentTimeMillis());
 		challengeDao.save(challenge);
 
-		ModelAndView mav = new ModelAndView("redirect:/nearby-search?keyword=taco");
+		ModelAndView mav = new ModelAndView("redirect:/dashboard");
 		return mav;
 	}
 

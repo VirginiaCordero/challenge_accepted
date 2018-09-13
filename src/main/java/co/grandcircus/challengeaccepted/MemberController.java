@@ -57,31 +57,43 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView("dashboard");
 		mav.addObject("groups", groupDao.findAll());
 
-		Challenge nextChallenge = challengeDao.findFirstByGroupInOrderByCreationDateAsc(user.getGroups());
-
 		PlaceDetailResult placeDetailResult = null;
-
-		if (nextChallenge != null) {
+		
+		UserChallenge acceptedChallenge = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
+		
+		Challenge displayedChallenge = null;
+		
+		// if user has an accepted challenge
+		if (acceptedChallenge!=null) {
+			displayedChallenge = acceptedChallenge.getChallenge();
+		} else {
+			// Get list of user's challenges and look for a "fresh" challenge
+			List<Challenge> myChallenges = challengeDao.findByGroupInOrderByCreationDateAsc(user.getGroups());
+			for (Challenge challenge : myChallenges) {
+				if (userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(), challenge.getId())==null) {
+					displayedChallenge = challenge;
+					break;
+				}
+			}
+		}
+		
+		// TODO: handle what happens when there is no challenge to display!
+		
+		if (displayedChallenge != null) {
 
 			RestTemplate restTemplate = new RestTemplate();
 
 			String url = "https://maps.googleapis.com/maps/api/place/details/json?" + "placeid="
-					+ nextChallenge.getPlaceId() + "&key=" + apiKey;
+					+ displayedChallenge.getPlaceId() + "&key=" + apiKey;
 
 			System.out.println(url);
 
 			placeDetailResult = restTemplate.getForObject(url, PlaceDetailResult.class);
 
 		}
-
-		UserChallenge accepted = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
 		
-		List<Challenge> myChallenges = challengeDao.findByGroupInOrderByCreationDateAsc(user.getGroups());
-		
+		mav.addObject("nextChallenge", displayedChallenge);
 		mav.addObject("nextChallengeDetails", placeDetailResult);
-		mav.addObject("allMyChallenges", myChallenges);
-		mav.addObject("nextChallenge", nextChallenge);
-		mav.addObject("accepted", accepted);
 
 		return mav;
 	}
