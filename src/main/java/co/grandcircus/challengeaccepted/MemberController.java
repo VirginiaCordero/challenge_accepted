@@ -92,6 +92,7 @@ public class MemberController {
 
 		}
 		
+		mav.addObject("acceptedChallengeExists", acceptedChallenge);
 		mav.addObject("nextChallenge", displayedChallenge);
 		mav.addObject("nextChallengeDetails", placeDetailResult);
 
@@ -159,21 +160,39 @@ public class MemberController {
 	public ModelAndView acceptOrDeclineChallenge(@SessionAttribute(name = "user", required = false) User user,
 			@RequestParam("challengeId") Challenge challenge, @RequestParam("response") String response) {
 
-		// Row in the user_challenge Table
-		UserChallenge userChallenge = new UserChallenge();
-
-		// Set all the values
-		userChallenge.setChallenge(challenge); // sets challenge_id
-		userChallenge.setUser(userDao.findById(user.getId()).orElse(null)); // sets user_id
-		userChallenge.setResponseDate(System.currentTimeMillis()); // sets responseDate
-
-		if (response.equalsIgnoreCase("accepted")) {
-			userChallenge.setStatus("accepted"); // set status
+		UserChallenge userChallenge = null;
+		
+		// Check to see if they have previously accepted this challenge
+		userChallenge = userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(), challenge.getId());
+		
+		// If it exists, update the row in the table with their outcome
+		if (userChallenge!=null) {
+			
+			if (response.equalsIgnoreCase("completed")) {
+				userChallenge.setStatus("completed");
+			} else {
+				userChallenge.setStatus("failed");	
+			}
+			
+		// If not previously accepted, then set details and save a new row in the table
 		} else {
-			userChallenge.setStatus("declined"); // set status
+			
+			// Row in the user_challenge Table
+			userChallenge = new UserChallenge();
+	
+			// Set all the values
+			userChallenge.setChallenge(challenge); // sets challenge_id
+			userChallenge.setUser(userDao.findById(user.getId()).orElse(null)); // sets user_id
+			userChallenge.setResponseDate(System.currentTimeMillis()); // sets responseDate
+	
+			if (response.equalsIgnoreCase("accepted")) {
+				userChallenge.setStatus("accepted"); // set status
+			} else {
+				userChallenge.setStatus("declined"); // set status
+			}
 		}
 
-		// Save the Row
+		// Regardless of how we got here, save the row
 		userChallengeDao.save(userChallenge);
 
 		return new ModelAndView("redirect:/dashboard");

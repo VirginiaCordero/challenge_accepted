@@ -65,8 +65,20 @@
 	<p>${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
 	<p>${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>
 	
-	<a href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge Accepted</a>
-	<a href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
+	<c:choose>
+  		<c:when test="${ not empty acceptedChallengeExists }">
+  			<a href="/challenge-response?response=completed&challengeId=${ nextChallenge.id }">Challenge Completed</a>
+			<a href="/challenge-response?response=failed&challengeId=${ nextChallenge.id }">I Have Failed</a>
+  		</c:when>
+  		<c:when test="${ not empty nextChallenge }">
+			<a href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge Accepted</a>
+			<a href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
+		</c:when>
+		<c:otherwise>
+			<p> Join more groups, loser.</p>
+		</c:otherwise>
+	</c:choose>
+	
 	<p><a href="/nearby-search">Select Location for a Challenge</a></p>
 	
 	</body>
