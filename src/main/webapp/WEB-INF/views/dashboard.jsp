@@ -47,6 +47,16 @@
 				<p class="card-text">Created: ${ created }</p>
 			</div>
 		</div>
+		<!-- displayed challenge statistics -->
+		<div class="card text-white bg-success mb-4" style="width: 36rem;">
+			<div class="card-body">
+				<h3 class="card-title">Displayed Challenge Statistics</h3>
+				<p class="card-text">Accepted: ${ displayedChallengeNumAccepts }</p>
+				<p class="card-text">Declined: ${ displayedChallengeNumDeclines }</p>
+				<p class="card-text">Completed: ${ displayedChallengeNumCompleted }</p>
+				<p class="card-text">Failed: ${ displayedChallengeNumFailed }</p>
+			</div>
+		</div>
 		<!-- your groups -->
 		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 			<div class="card-body">

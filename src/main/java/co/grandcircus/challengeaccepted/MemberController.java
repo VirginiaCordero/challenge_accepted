@@ -59,34 +59,36 @@ public class MemberController {
 		mav.addObject("groups", groupDao.findAll());
 
 		PlaceDetailResult placeDetailResult = null;
-		
+
 		UserChallenge acceptedChallenge = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
-		
+
 		Challenge displayedChallenge = null;
-		
-//		boolean userHasNoGroups = user.getGroups() == null || user.getGroups().isEmpty();
-//		boolean userHasGroups = !userHasNoGroups;
-		
+
+		// boolean userHasNoGroups = user.getGroups() == null ||
+		// user.getGroups().isEmpty();
+		// boolean userHasGroups = !userHasNoGroups;
+
 		boolean userHasGroups = user.getGroups() != null && !user.getGroups().isEmpty();
-		
+
 		if (userHasGroups) {
 			// if user has an accepted challenge
-			if (acceptedChallenge!=null) {
+			if (acceptedChallenge != null) {
 				displayedChallenge = acceptedChallenge.getChallenge();
 			} else {
 				// Get list of user's challenges and look for a "fresh" challenge
 				List<Challenge> myChallenges = challengeDao.findByGroupInOrderByCreationDateAsc(user.getGroups());
 				for (Challenge challenge : myChallenges) {
-					if (userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(), challenge.getId())==null) {
+					if (userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(),
+							challenge.getId()) == null) {
 						displayedChallenge = challenge;
 						break;
 					}
 				}
 			}
 		}
-		
+
 		// TODO: handle what happens when there is no challenge to display!
-		
+
 		if (displayedChallenge != null) {
 
 			RestTemplate restTemplate = new RestTemplate();
@@ -99,22 +101,21 @@ public class MemberController {
 			placeDetailResult = restTemplate.getForObject(url, PlaceDetailResult.class);
 
 		}
-		
+
 		// Calculate user stats
 		Integer total = userChallengeDao.countByUserIdEquals(user.getId());
-		
-		if (total!=0) {
+
+		if (total != 0) {
 			// num accepted/declined/completed/failed
 			Integer declined = userChallengeDao.countByUserIdEqualsAndStatusIs(user.getId(), "declined");
 			Integer accepted = total - declined;
 			Integer completed = userChallengeDao.countByUserIdEqualsAndStatusIs(user.getId(), "completed");
 			Integer failed = userChallengeDao.countByUserIdEqualsAndStatusIs(user.getId(), "failed");
-			
-			
+
 			// calculate user's accept:decline ratio
 			Double acceptDeclineRatio = (total - declined) / (total * 1.0); // hacky way to get a double
-			
-			if ((completed!=0 || failed!=0)) {
+
+			if ((completed != 0 || failed != 0)) {
 				// calculate user's complete:fail ratio
 				Double completeFailRatio = completed / ((total - declined) * 1.0); // hacky way to get a double
 				System.out.println(completed);
@@ -122,10 +123,10 @@ public class MemberController {
 				System.out.println(failed);
 				mav.addObject("completeFailRatio", completeFailRatio);
 			}
-			
+
 			// calculate how many challenges the user has created
 			Integer challengesCreated = challengeDao.countByUserIdEquals(user.getId());
-			
+
 			mav.addObject("total", total);
 			mav.addObject("accepted", accepted);
 			mav.addObject("declined", declined);
@@ -134,33 +135,44 @@ public class MemberController {
 			mav.addObject("acceptDeclineRatio", acceptDeclineRatio);
 			mav.addObject("created", challengesCreated);
 		}
-		
+
 		mav.addObject("acceptedChallengeExists", acceptedChallenge);
 		mav.addObject("nextChallenge", displayedChallenge);
 		mav.addObject("nextChallengeDetails", placeDetailResult);
 
+		
+		Integer displayedChallengeNumAccepts = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "accepted");
+		Integer displayedChallengeNumDeclines = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "declined");
+		Integer displayedChallengeNumCompleted = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "completed");
+		Integer displayedChallengeNumFailed = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "failed");
+		
+		mav.addObject("displayedChallengeNumAccepts", displayedChallengeNumAccepts);
+		mav.addObject("displayedChallengeNumDeclines", displayedChallengeNumDeclines);
+		mav.addObject("displayedChallengeNumCompleted", displayedChallengeNumCompleted);
+		mav.addObject("displayedChallengeNumFailed", displayedChallengeNumFailed);
+		
 		return mav;
-	}
 
+	}
 
 	@PostMapping("/create-group")
 	public ModelAndView createGroup(@SessionAttribute(name = "user", required = false) User user,
 			RedirectAttributes redir, Group group, HttpSession session) {
-		
+
 		// For this URL, make sure there is a user on the session.
 		if (user == null) {
 			// if not, send them back to the login page with a message.
 			redir.addFlashAttribute("message", "Wait! Please log in.");
 			return new ModelAndView("redirect:/login");
 		}
-		
+
 		groupDao.save(group);
-		
+
 		User dbUser = userDao.findById(user.getId()).orElse(null);
 		dbUser.getGroups().add(group);
 		userDao.save(dbUser);
 		session.setAttribute("user", dbUser);
-		
+
 		redir.addFlashAttribute("You have created the group:" + group.getName() + "!");
 		return new ModelAndView("redirect:/dashboard");
 	}
@@ -183,7 +195,6 @@ public class MemberController {
 		redir.addFlashAttribute("You have been added to " + group.getName() + "!");
 		return new ModelAndView("redirect:/dashboard");
 	}
-
 
 	@PostMapping("/leave-group")
 	public ModelAndView leaveGroupFromDashboard(@SessionAttribute(name = "user", required = false) User user,
@@ -208,30 +219,30 @@ public class MemberController {
 			@RequestParam("challengeId") Challenge challenge, @RequestParam("response") String response) {
 
 		UserChallenge userChallenge = null;
-		
+
 		// Check to see if they have previously accepted this challenge
 		userChallenge = userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(), challenge.getId());
-		
+
 		// If it exists, update the row in the table with their outcome
-		if (userChallenge!=null) {
-			
+		if (userChallenge != null) {
+
 			if (response.equalsIgnoreCase("completed")) {
 				userChallenge.setStatus("completed");
 			} else {
-				userChallenge.setStatus("failed");	
+				userChallenge.setStatus("failed");
 			}
-			
-		// If not previously accepted, then set details and save a new row in the table
+
+			// If not previously accepted, then set details and save a new row in the table
 		} else {
-			
+
 			// Row in the user_challenge Table
 			userChallenge = new UserChallenge();
-	
+
 			// Set all the values
 			userChallenge.setChallenge(challenge); // sets challenge_id
 			userChallenge.setUser(userDao.findById(user.getId()).orElse(null)); // sets user_id
 			userChallenge.setResponseDate(System.currentTimeMillis()); // sets responseDate
-	
+
 			if (response.equalsIgnoreCase("accepted")) {
 				userChallenge.setStatus("accepted"); // set status
 			} else {
@@ -244,5 +255,4 @@ public class MemberController {
 
 		return new ModelAndView("redirect:/dashboard");
 	}
-
 }

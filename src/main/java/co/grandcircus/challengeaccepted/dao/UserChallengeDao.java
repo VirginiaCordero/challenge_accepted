@@ -19,4 +19,6 @@ public interface UserChallengeDao extends JpaRepository<UserChallenge, Long> {
 	// Count total where status is something
 	Integer countByUserIdEqualsAndStatusIs(Long userId, String status);
 	
+	// Count number of challenges where status is something
+	Integer countByChallengeIdAndStatusIs(Long challengeId, String status);
 }
