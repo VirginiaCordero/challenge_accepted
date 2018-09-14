@@ -30,9 +30,10 @@ public class GooglePlacesApiController {
 	private GroupDao groupDao;
 
 	@RequestMapping("/nearby-search")
-	public ModelAndView apiTest(@RequestParam(value = "keyword", required = false) String keyword) {
+	public ModelAndView apiTest(@RequestParam(value = "keyword", required = false) String keyword,
+								@SessionAttribute(name = "user", required = false) User user) {
 
-		String location = "42.3359244,-83.0497189";
+		String location = user.getLocation();
 		Integer radius = 2000;
 
 		RestTemplate restTemplate = new RestTemplate();

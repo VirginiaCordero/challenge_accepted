@@ -100,6 +100,41 @@ public class MemberController {
 
 		}
 		
+		// Calculate user stats
+		Integer total = userChallengeDao.countByUserIdEquals(user.getId());
+		
+		if (total!=0) {
+			// num accepted/declined/completed/failed
+			Integer declined = userChallengeDao.countByUserIdEqualsAndStatusIs(user.getId(), "declined");
+			Integer accepted = total - declined;
+			Integer completed = userChallengeDao.countByUserIdEqualsAndStatusIs(user.getId(), "completed");
+			Integer failed = userChallengeDao.countByUserIdEqualsAndStatusIs(user.getId(), "failed");
+			
+			
+			// calculate user's accept:decline ratio
+			Double acceptDeclineRatio = (total - declined) / (total * 1.0); // hacky way to get a double
+			
+			if ((completed!=0 || failed!=0)) {
+				// calculate user's complete:fail ratio
+				Double completeFailRatio = completed / ((total - declined) * 1.0); // hacky way to get a double
+				System.out.println(completed);
+				System.out.println(total);
+				System.out.println(failed);
+				mav.addObject("completeFailRatio", completeFailRatio);
+			}
+			
+			// calculate how many challenges the user has created
+			Integer challengesCreated = challengeDao.countByUserIdEquals(user.getId());
+			
+			mav.addObject("total", total);
+			mav.addObject("accepted", accepted);
+			mav.addObject("declined", declined);
+			mav.addObject("completed", completed);
+			mav.addObject("failed", failed);
+			mav.addObject("acceptDeclineRatio", acceptDeclineRatio);
+			mav.addObject("created", challengesCreated);
+		}
+		
 		mav.addObject("acceptedChallengeExists", acceptedChallenge);
 		mav.addObject("nextChallenge", displayedChallenge);
 		mav.addObject("nextChallengeDetails", placeDetailResult);

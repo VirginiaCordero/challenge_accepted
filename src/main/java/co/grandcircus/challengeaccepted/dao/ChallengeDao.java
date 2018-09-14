@@ -13,5 +13,7 @@ public interface ChallengeDao extends JpaRepository<Challenge, Long> {
 	Challenge findFirstByGroupInOrderByCreationDateAsc(Set<Group> groups);
 	
 	List<Challenge> findByGroupInOrderByCreationDateAsc(Set<Group>groups);
+	
+	Integer countByUserIdEquals(Long userId);
 
 }

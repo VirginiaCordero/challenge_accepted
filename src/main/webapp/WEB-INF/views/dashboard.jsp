@@ -13,6 +13,15 @@
 <body>
 
 	<p>${ user.firstName }${ user.lastName }</p>
+	<p>Stats:</p>
+	<p>Total: ${ total }</p>
+	<p>Accepted: ${ accepted }:</p>
+	<p>Declined: ${ declined }:</p>
+	<p>Completed: ${ completed }</p>
+	<p>Failed: ${ failed }</p>
+	<p>Acceptability: ${ acceptDeclineRatio }</p>
+	<p>Completionistabilityness: ${ completeFailRatio }</p>
+	<p>Created: ${ created }</p>
 	<p>Your Groups:</p>
 	<c:forEach items="${ user.groups }" var="group">
 		<p>${ group.name }</p>
