@@ -1,15 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
-<!DOCTYPE html>
+	pageEncoding="UTF-8"%>
+<!DOCTYPE>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Create Challenge</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css" />
+<!-- Custom CSS goes below Bootstrap CSS -->
+<link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-
+<%@ include file="navbar.jsp" %>
 	<form action="/create-challenge" method="post">
 		<p>
 			<label for="name">Name: </label>

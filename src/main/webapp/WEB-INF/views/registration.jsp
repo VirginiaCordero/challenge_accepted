@@ -1,21 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!doctype html>
+<!DOCTYPE>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<!-- Required meta tags -->
-<meta charset="UTF-8">
-<title>Registration Form</title>
-
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<link rel="shortcut icon" type="image/jpg" href="img/favicon1.jpg" />
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Registration</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css" />
+<!-- Custom CSS goes below Bootstrap CSS -->
+<link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+<%@ include file="navbar.jsp" %>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">

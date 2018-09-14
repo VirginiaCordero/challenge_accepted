@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+<%@ include file="navbar.jsp" %>
 	<!-- With boostrap, pages should generally be surrounded with a container element. -->
 	<main class="container">
 		<h1 class="page-header mt-4 mb-4">Events List</h1>
