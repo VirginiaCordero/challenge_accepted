@@ -145,7 +145,7 @@ public class MemberController {
 
 	@PostMapping("/create-group")
 	public ModelAndView createGroup(@SessionAttribute(name = "user", required = false) User user,
-			RedirectAttributes redir, Group group) {
+			RedirectAttributes redir, Group group, HttpSession session) {
 		
 		// For this URL, make sure there is a user on the session.
 		if (user == null) {
@@ -156,9 +156,13 @@ public class MemberController {
 		
 		groupDao.save(group);
 		
+		User dbUser = userDao.findById(user.getId()).orElse(null);
+		dbUser.getGroups().add(group);
+		userDao.save(dbUser);
+		session.setAttribute("user", dbUser);
+		
 		redir.addFlashAttribute("You have created the group:" + group.getName() + "!");
 		return new ModelAndView("redirect:/dashboard");
-	
 	}
 
 	@PostMapping("/join-group")
