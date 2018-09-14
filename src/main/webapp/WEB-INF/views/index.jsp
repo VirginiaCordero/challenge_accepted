@@ -6,18 +6,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Auth Demo</title>
-<link rel="stylesheet" href="/style.css" />
+<!-- <link rel="stylesheet" href="/style.css" /> -->
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="shortcut icon" type="image/jpg" href="img/favicon1.jpg" />
 </head>
 <body>
 
-	<h1>Welcome</h1>
+	<h3>Challenge Accepted</h3>
+	<div>
+	<a href="/login" class="btn btn-secondary mb-2">Login</a>	
+	<a href="/registration" class="btn btn-secondary mb-2">Registration</a>
+	</div>
+		
 	
-	<p class="message">${ message }</p>
+
+	<div>
+		<iframe src="https://giphy.com/embed/mVJojMQvDwixG" width="480" height="284" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/llama-bring-it-on-mVJojMQvDwixG">via GIPHY</a></p>
 	
-	<p>This is the index page</p>
-	
-	<c:if test="${ not empty user }">
-		<p>Feel free to browse our <a href="/secrets">secrets</a>.</p>
-	</c:if>
+	</div>
+		
 </body>
 </html>
