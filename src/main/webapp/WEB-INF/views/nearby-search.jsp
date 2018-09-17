@@ -59,20 +59,21 @@
 					<h4>Sorry, your search did not return any results :(</h4>
 				</c:if>
 			</div>
+			
 			<div class="col-lg-6">
 				<iframe width="550" height="550" frameborder="0" style="border: 0"
-					src="https://www.google.com/maps/embed/v1/search?key=AIzaSyAJa6OUqYjtxCUIA95QUqgstguQ32pXVUs
-					&q=bike+trails+near+detroit
-					&center=42.3359244,-83.0497189
-					&zoom=12"
+					src="${ embeddedMapUrl }"
 					allowfullscreen>
 				</iframe>
 			</div>
+			
 		</div>
 		
 		
 		<p>
 			<a href="">Previous 20 Results</a> -- <a href="">Next 20 Results</a>
 		<p>
+		
 	</main>
+	
 </body>

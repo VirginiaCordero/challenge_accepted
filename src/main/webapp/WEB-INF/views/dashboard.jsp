@@ -59,7 +59,7 @@
 			<div class="card-body">
 				<h3 class="card-title">Your groups</h3>
 				<c:forEach items="${ user.groups }" var="group">
-					<p class="card-text">${ group.name }</p>
+					<p class="card-text">${ group.name }: ${ group.description }</p>
 				</c:forEach>
 			</div>
 		</div>
@@ -141,6 +141,7 @@
 				<p class="card-text">${ nextChallenge.name }</p>
 				<p class="card-text">${ nextChallenge.description }</p>
 				<h3 class="card-title">Challenge Details</h3>
+				<p class="card-text">${ nextChallengeDetails.detailResult.name}</p>
 				<p class="card-text">${ nextChallengeDetails.detailResult.formattedAddress}</p>
 				<p class="card-text">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
 				<p class="card-text">${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>

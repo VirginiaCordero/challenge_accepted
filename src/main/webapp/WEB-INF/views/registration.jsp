@@ -72,8 +72,8 @@
 						<h5>Be sure to check your spam folders.</h5>
 						<input id="location" value="" name="location">
 					</fieldset>
-				</form>				
-			</div>		
+				</form>
+			</div>
 			<div class="col-md-6">
 				<h1 class="page-header">Challenge Accepted</h1>
 				<p>

@@ -140,16 +140,19 @@ public class MemberController {
 		mav.addObject("nextChallenge", displayedChallenge);
 		mav.addObject("nextChallengeDetails", placeDetailResult);
 
+		if (displayedChallenge!=null) {
+			
+			Integer displayedChallengeNumAccepts = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "accepted");
+			Integer displayedChallengeNumDeclines = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "declined");
+			Integer displayedChallengeNumCompleted = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "completed");
+			Integer displayedChallengeNumFailed = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "failed");
 		
-		Integer displayedChallengeNumAccepts = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "accepted");
-		Integer displayedChallengeNumDeclines = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "declined");
-		Integer displayedChallengeNumCompleted = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "completed");
-		Integer displayedChallengeNumFailed = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "failed");
-		
-		mav.addObject("displayedChallengeNumAccepts", displayedChallengeNumAccepts);
-		mav.addObject("displayedChallengeNumDeclines", displayedChallengeNumDeclines);
-		mav.addObject("displayedChallengeNumCompleted", displayedChallengeNumCompleted);
-		mav.addObject("displayedChallengeNumFailed", displayedChallengeNumFailed);
+			mav.addObject("displayedChallengeNumAccepts", displayedChallengeNumAccepts);
+			mav.addObject("displayedChallengeNumDeclines", displayedChallengeNumDeclines);
+			mav.addObject("displayedChallengeNumCompleted", displayedChallengeNumCompleted);
+			mav.addObject("displayedChallengeNumFailed", displayedChallengeNumFailed);
+			
+		}
 		
 		return mav;
 
