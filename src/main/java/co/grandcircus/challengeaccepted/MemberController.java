@@ -20,12 +20,14 @@ import co.grandcircus.challengeaccepted.dao.ChallengeDao;
 import co.grandcircus.challengeaccepted.dao.GroupDao;
 import co.grandcircus.challengeaccepted.dao.UserChallengeDao;
 import co.grandcircus.challengeaccepted.dao.UserDao;
+import co.grandcircus.challengeaccepted.dto.LeaderboardRowDTO;
 import co.grandcircus.challengeaccepted.entity.Challenge;
 import co.grandcircus.challengeaccepted.entity.Group;
 import co.grandcircus.challengeaccepted.entity.User;
 import co.grandcircus.challengeaccepted.entity.UserChallenge;
 import co.grandcircus.challengeaccepted.model.googleplaces.PlaceDetailResult;
 import co.grandcircus.challengeaccepted.projectioninterfaces.ChallengeStatus;
+import co.grandcircus.challengeaccepted.projectioninterfaces.LeaderboardRow;
 
 @Controller
 public class MemberController {
@@ -104,7 +106,7 @@ public class MemberController {
 
 		}
 
-		// Calculate user stats
+		// All Calculate user stats
 		Integer total = userChallengeDao.countByUserIdEquals(user.getId());
 
 		if (total != 0) {
@@ -142,6 +144,7 @@ public class MemberController {
 		mav.addObject("nextChallenge", displayedChallenge);
 		mav.addObject("nextChallengeDetails", placeDetailResult);
 
+		// All of this is for seeing stats about a specific challenge
 		if (displayedChallenge!=null) {
 			
 			Integer displayedChallengeNumAccepts = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "accepted");
@@ -287,4 +290,61 @@ public class MemberController {
 
 		return new ModelAndView("redirect:/dashboard");
 	}
+	
+	@RequestMapping("group-leaderboard")
+	public ModelAndView showGroupLeaderboard(@RequestParam("groupId") Long groupId) {
+		return new ModelAndView("leaderboard", "leaderboard", getGroupLeaderboard(groupId));
+		
+	}
+	
+	// Method for getting a "leaderboard" for a specific group
+	private List<LeaderboardRowDTO> getGroupLeaderboard(Long groupId) {
+		List<LeaderboardRow> getLeaderboardQueryResult = userChallengeDao.getLeaderboard(groupId);
+		
+		int rowNumber = 1;
+		int dispRank = 1;
+		Integer prevRowNumComp = null;
+		Integer prevRowCompletionRate = null;
+		List<LeaderboardRowDTO> leaderboard = new ArrayList<LeaderboardRowDTO>();
+		
+		for (LeaderboardRow row : getLeaderboardQueryResult) {
+			
+			// If the current row is different from the last row, update the disp rank
+			// to the current row number (otherwise, there is a tie and the disp rank should
+			// not yet be updated).
+			if (row.getCompleted()!=prevRowNumComp || row.getCompletionRate()!=prevRowCompletionRate) {
+				dispRank = rowNumber;
+			}
+			
+			// Assign current row's values and current dispRank to a DTO
+			LeaderboardRowDTO rowDTO = new LeaderboardRowDTO();
+			rowDTO.setUserId(row.getUserId());
+			rowDTO.setRank(dispRank);
+			rowDTO.setFirstName(row.getFirstName());
+			rowDTO.setLastName(row.getLastName());
+			rowDTO.setCompleted(row.getCompleted());
+			rowDTO.setDeclined(row.getDeclined());
+			rowDTO.setFailed(row.getFailed());
+			
+			if (row.getCompletionRate()==null ) {
+				rowDTO.setCompletionRate(100);
+			} else {
+				rowDTO.setCompletionRate(row.getCompletionRate());
+			}
+			
+			// Add DTO to the leaderboard
+			leaderboard.add(rowDTO);
+			
+			// Assign "scored" values for comparison in the next iteration of this loop
+			// and increment the row number to reassign dispRank after any ties.
+			prevRowNumComp = row.getCompleted();
+			prevRowCompletionRate = row.getCompletionRate();
+			rowNumber++;
+			
+		}
+		
+		return leaderboard;
+		
+	}
+	 
 }

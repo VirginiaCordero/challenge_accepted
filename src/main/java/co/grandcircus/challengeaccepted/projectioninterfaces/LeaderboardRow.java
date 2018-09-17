@@ -2,7 +2,7 @@ package co.grandcircus.challengeaccepted.projectioninterfaces;
 
 public interface LeaderboardRow {
 	
-	Integer getUserId();
+	Long getUserId();
 	String getFirstName();
 	String getLastName();
 	Integer getCompleted();
