@@ -1,4 +1,4 @@
-package co.grandcircus.challengeaccepted.entity;
+package co.grandcircus.challengeaccepted.projectioninterfaces;
 
 public interface LeaderboardRow {
 	
@@ -8,6 +8,6 @@ public interface LeaderboardRow {
 	Integer getCompleted();
 	Integer getDeclined();
 	Integer getFailed();
-	Integer getScore();
+	Integer getCompletionRate();
 
 }

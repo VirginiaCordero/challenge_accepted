@@ -48,10 +48,10 @@
 		<div class="card text-white bg-success mb-4" style="width: 36rem;">
 			<div class="card-body">
 				<h3 class="card-title">Displayed Challenge Statistics</h3>
-				<p class="card-text">Accepted: ${ displayedChallengeNumAccepts }</p>
-				<p class="card-text">Declined: ${ displayedChallengeNumDeclines }</p>
-				<p class="card-text">Completed: ${ displayedChallengeNumCompleted }</p>
-				<p class="card-text">Failed: ${ displayedChallengeNumFailed }</p>
+				<p class="card-text">Accepted: ${ displayedChallengeNumAccepts } ${ displayedChallengeAcceptList }</p>
+				<p class="card-text">Declined: ${ displayedChallengeNumDeclines } ${ displayedChallengeDeclineList }</p>
+				<p class="card-text">Completed: ${ displayedChallengeNumCompleted } ${ displayedChallengeCompleteList }</p>
+				<p class="card-text">Failed: ${ displayedChallengeNumFailed } ${ displayedChallengeFailList }</p>
 			</div>
 		</div>
 		<!-- your groups -->

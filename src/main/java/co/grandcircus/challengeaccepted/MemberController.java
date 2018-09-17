@@ -1,5 +1,6 @@
 package co.grandcircus.challengeaccepted;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -24,6 +25,7 @@ import co.grandcircus.challengeaccepted.entity.Group;
 import co.grandcircus.challengeaccepted.entity.User;
 import co.grandcircus.challengeaccepted.entity.UserChallenge;
 import co.grandcircus.challengeaccepted.model.googleplaces.PlaceDetailResult;
+import co.grandcircus.challengeaccepted.projectioninterfaces.ChallengeStatus;
 
 @Controller
 public class MemberController {
@@ -146,7 +148,34 @@ public class MemberController {
 			Integer displayedChallengeNumDeclines = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "declined");
 			Integer displayedChallengeNumCompleted = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "completed");
 			Integer displayedChallengeNumFailed = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "failed");
-		
+			
+			// Gets the user statuses for the displayed challenge
+			List<ChallengeStatus> challengeStatuses = userChallengeDao.getChallengeStatuses(displayedChallenge.getId());
+			
+			List<String> accepted = new ArrayList<String>();
+			List<String> declined = new ArrayList<String>();
+			List<String> completed = new ArrayList<String>();
+			List<String> failed = new ArrayList<String>();
+			
+			for (ChallengeStatus challengeStatus : challengeStatuses) {
+				
+				if ("accepted".equalsIgnoreCase(challengeStatus.getStatus())) {
+					accepted.add(challengeStatus.getFirstName() + " " + challengeStatus.getLastName());
+				} else if ("declined".equalsIgnoreCase(challengeStatus.getStatus())) {
+					declined.add(challengeStatus.getFirstName() + " " + challengeStatus.getLastName());
+				} else if ("completed".equalsIgnoreCase(challengeStatus.getStatus())) {
+					completed.add(challengeStatus.getFirstName() + " " + challengeStatus.getLastName());
+				} else {
+					failed.add(challengeStatus.getFirstName() + " " + challengeStatus.getLastName());
+				}
+				
+			}
+			
+			mav.addObject("displayedChallengeAcceptList", accepted);
+			mav.addObject("displayedChallengeDeclineList", declined);
+			mav.addObject("displayedChallengeCompleteList", completed);
+			mav.addObject("displayedChallengeFailList", failed);
+			
 			mav.addObject("displayedChallengeNumAccepts", displayedChallengeNumAccepts);
 			mav.addObject("displayedChallengeNumDeclines", displayedChallengeNumDeclines);
 			mav.addObject("displayedChallengeNumCompleted", displayedChallengeNumCompleted);

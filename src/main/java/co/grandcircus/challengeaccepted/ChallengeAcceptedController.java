@@ -14,8 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.grandcircus.challengeaccepted.dao.UserChallengeDao;
 import co.grandcircus.challengeaccepted.dao.UserDao;
-import co.grandcircus.challengeaccepted.entity.LeaderboardRow;
 import co.grandcircus.challengeaccepted.entity.User;
+import co.grandcircus.challengeaccepted.projectioninterfaces.LeaderboardRow;
 
 @Controller
 public class ChallengeAcceptedController {
@@ -44,14 +44,52 @@ public class ChallengeAcceptedController {
 	}
 	
 	@RequestMapping("/test")
-	public void testQuery(@RequestParam("groupId") Integer groupId) {
+	public void testQuery(@RequestParam("groupId") Long groupId) {
 		List<LeaderboardRow> leaderboard = userChallengeDao.getLeaderboard(groupId);
 		
+		int rowNumber = 1;
+		int dispRank = 1;
+		Integer prevNumComp = null;
+		Integer prevScore = null;
+		
 		for (LeaderboardRow row : leaderboard) {
-			System.out.println(row.getUserId());
-			System.out.println(row.getFirstName());
-			System.out.println(row.getScore());
+			
+			if (row.getCompleted()==prevNumComp && row.getCompletionRate()==prevScore) {
+				System.out.println(dispRank + ". " + row.getFirstName());
+				
+			} else {
+				dispRank = rowNumber;
+				System.out.println(dispRank + ". " + row.getFirstName());
+				
+			}
+			
+			prevNumComp = row.getCompleted();
+			prevScore = row.getCompletionRate();
+			rowNumber++;
+			
 		}
 		
+		rowNumber = 1;
+		dispRank = 1;
+		prevNumComp = null;
+		prevScore = null;
+		
+		for (LeaderboardRow row : leaderboard) {
+				
+			if (row.getCompleted()==prevNumComp && row.getCompletionRate()==prevScore) {
+				
+			} else {
+				dispRank = rowNumber;
+				
+			}
+			
+			prevNumComp = row.getCompleted();
+			prevScore = row.getCompletionRate();
+			rowNumber++;
+			
+			if (row.getUserId() == 4) {
+				System.out.println(dispRank + ". " + row.getFirstName());
+			}	
+		}
 	}
 }
