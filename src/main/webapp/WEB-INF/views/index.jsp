@@ -14,17 +14,14 @@
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-	<h3>Challenge Accepted</h3>
-	<div>
-		<a href="/login" class="btn btn-secondary mb-2">Login</a> <a
-			href="/registration" class="btn btn-secondary mb-2">Registration</a>
-	</div>
-	<div>
-		<iframe src="https://giphy.com/embed/mVJojMQvDwixG" width="480"
-			height="284" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+	<%@ include file="navbar.jsp"%>
+	<div align="center">
+		<h1>Welcome</h1>
 		<p>
-			<a href="https://giphy.com/gifs/llama-bring-it-on-mVJojMQvDwixG">via
-				GIPHY</a>
+			<iframe src="https://giphy.com/embed/mVJojMQvDwixG" width="480"
+				height="284" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+			<a href="https://giphy.com/gifs/llama-bring-it-on-mVJojMQvDwixG"></a>
 		</p>
 	</div>
 </body>
