@@ -18,13 +18,49 @@
 	<div class="container">
 		<!-- dashboard header -->
 		<div class="card-columns">
-		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
+				<div class="jumbotron" style="width: 30rem;">
+			<img class="card-img-top" 
+				src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=${ apiKey }"
+				alt="Card image cap">
+			<div class="card-body">
+				<h3 class="card-title">Next Challenge</h3>
+				<p class="card-text">${ nextChallenge.name }</p>
+				<p class="card-text">${ nextChallenge.description }</p>
+				<h3 class="card-title">Challenge Details</h3>
+				<p class="card-text">${ nextChallengeDetails.detailResult.name}</p>
+				<p class="card-text">${ nextChallengeDetails.detailResult.formattedAddress}</p>
+				<p class="card-text">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
+				<p class="card-text">${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>
+				<h3 class="card-title">Challenge Accepted</h3>
+				<c:choose>
+					<c:when test="${ not empty acceptedChallengeExists }">
+						<a class="btn btn-success" role="button"
+							href="/challenge-response?response=completed&challengeId=${ nextChallenge.id }">Challenge
+							Completed</a>
+						<a class="btn btn-danger" role="button"
+							href="/challenge-response?response=failed&challengeId=${ nextChallenge.id }">I
+							Have Failed</a>
+					</c:when>
+					<c:when test="${ not empty nextChallenge }">
+						<a class="btn btn-info" role="button"
+							href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge
+							Accepted</a>
+						<a class="btn btn-warning" role="button"
+							href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
+					</c:when>
+					<c:otherwise>
+						<p>Explore the world, join more groups!</p>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+		<!-- <div class="card text-white bg-primary mb-4" style="width: 20rem;">
 			<div class="card-body">
 				<h3 class="card-title">Dashboard</h3>
 				<img class="card-img-top" src="https://via.placeholder.com/360x100"
 					alt="Card image cap">
 			</div>
-		</div>
+		</div> -->
 		<!-- welcome -->
 		<div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
 			<div class="card-header">Welcome ${ user.firstName } ${ user.lastName }</div>
@@ -174,44 +210,8 @@
     <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
   </p>
 </div> -->		
-		<div class="jumbotron" style="width: 36rem;">
-			<img class="card-img-top"
-				src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=${ apiKey }"
-				alt="Card image cap">
-			<div class="card-body">
-				<h3 class="card-title">Next Challenge</h3>
-				<p class="card-text">${ nextChallenge.name }</p>
-				<p class="card-text">${ nextChallenge.description }</p>
-				<h3 class="card-title">Challenge Details</h3>
-				<p class="card-text">${ nextChallengeDetails.detailResult.name}</p>
-				<p class="card-text">${ nextChallengeDetails.detailResult.formattedAddress}</p>
-				<p class="card-text">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
-				<p class="card-text">${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>
-				<h3 class="card-title">Challenge Accepted</h3>
-				<c:choose>
-					<c:when test="${ not empty acceptedChallengeExists }">
-						<a
-							href="/challenge-response?response=completed&challengeId=${ nextChallenge.id }">Challenge
-							Completed</a>
-						<a
-							href="/challenge-response?response=failed&challengeId=${ nextChallenge.id }">I
-							Have Failed</a>
-					</c:when>
-					<c:when test="${ not empty nextChallenge }">
-						<a
-							href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge
-							Accepted</a>
-						<a
-							href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
-					</c:when>
-					<c:otherwise>
-						<p>Explore the world, join more groups!</p>
-					</c:otherwise>
-				</c:choose>
-			</div>
+
 		</div>
-		</div>
-	</div>
 	<!--last div-->
 
 	<!-- ==================== Legacy Code, but functional ==================== -->
