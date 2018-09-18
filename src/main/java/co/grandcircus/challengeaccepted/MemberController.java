@@ -88,8 +88,16 @@ public class MemberController {
 				userGroupInfoDTO.setName(group.getName());
 				userGroupInfoDTO.setDescription(group.getDescription());
 				userGroupInfoDTO.setUserRank(getUserRankInGroup(user.getId(), group.getId()));
-				userGroupInfoDTO.setNumMembers(group.getUsers().size());
-
+				
+				if (group.getUsers()==null) {
+					// This group was just created and for some reason
+					// the database hasn't updated
+					userGroupInfoDTO.setNumMembers(1);
+				} else {
+					// This group is already in the database
+					userGroupInfoDTO.setNumMembers(group.getUsers().size());
+				}
+				
 				// Add the DTO to the list
 				usersGroupsInfo.add(userGroupInfoDTO);
 
@@ -233,6 +241,7 @@ public class MemberController {
 
 		User dbUser = userDao.findById(user.getId()).orElse(null);
 		dbUser.getGroups().add(group);
+		
 		userDao.save(dbUser);
 		session.setAttribute("user", dbUser);
 
