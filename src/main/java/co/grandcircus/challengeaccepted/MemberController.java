@@ -221,7 +221,7 @@ public class MemberController {
 			mav.addObject("displayedChallengeNumFailed", displayedChallengeNumFailed);
 
 		}
-
+		mav.addObject("apiKey", apiKey);
 		return mav;
 
 	}

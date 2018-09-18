@@ -22,11 +22,13 @@
 			your location with us.</p>
 		<p>Don't worry. It's in a safe place.</p>
 		<h2>Set Your Current Location for Searches</h2>		
-		<form action="/set-location" id="location-form" class="form-inline my-2 my-lg-0"
-			method="POST" role="form">
-			<input hidden id="location" value="" name="location">
+		<form method="post" action="/set-location" id="location-form" class="form-inline my-2 my-lg-0" role="form">
+			<!-- <input hidden id="location" value="" name="location"> -->
+			<label for="zipcode">Zipcode</label>
+			<input required id="zipcode" name="zipcode">
+			<button>Submit!</button>
 		</form>
-		<button onclick="getLocation()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Save My Current Location!</button>
+		<!-- <button onclick="getLocation()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Save My Current Location!</button> -->
 		<p>Sometimes this can take a few seconds...</p>
 		<script>
 			let x = document.getElementById("location");

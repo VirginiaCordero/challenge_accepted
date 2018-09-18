@@ -71,7 +71,6 @@
 						<h5>You will receive an email to complete the registration
 							and validation process.</h5>
 						<h5>Be sure to check your spam folders.</h5>
- 						<input id="location" value="" name="location">
 					</fieldset>
 				</form>
 			</div>
@@ -86,24 +85,5 @@
 			</div>
 		</div>
 	</div>
-	<p>Click the button to get your coordinates.</p>
-	<button onclick="getLocation()">Try It</button>
-	<script>
-		let x = document.getElementById("location");
-
-		function getLocation() {
-			if (navigator.geolocation) {
-				navigator.geolocation.watchPosition(showPosition);
-			} else {
-				x.innerHTML = "Geolocation is not supported by this browser.";
-			}
-		}
-
-		function showPosition(position) {
-			var coord = position.coords.latitude + ","
-					+ position.coords.longitude;
-			x.value = coord;
-		}
-	</script>
 </body>
 </html>
