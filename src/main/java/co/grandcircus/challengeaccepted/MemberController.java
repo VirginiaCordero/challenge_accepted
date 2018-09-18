@@ -62,19 +62,20 @@ public class MemberController {
 		// if the user is logged in, proceed as normal.
 		ModelAndView mav = new ModelAndView("dashboard");
 		mav.addObject("groups", groupDao.findAll());
-
+		
+		// Get the user's currently-accepted challenge, if any! This might be null
 		UserChallenge acceptedChallenge = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
 
-		PlaceDetailResult placeDetailResult = null;
+		// Declare variables for the challenge to be displayed, and the results of a google place API call for 
+		// that challenge's location.
 		Challenge displayedChallenge = null;
-
-		// boolean userHasNoGroups = user.getGroups() == null ||
-		// user.getGroups().isEmpty();
-		// boolean userHasGroups = !userHasNoGroups;
-
+		PlaceDetailResult placeDetailResult = null;
+		
+		// Initialize a boolean for whethe or not the user belongs to any groups.
 		boolean userHasGroups = user.getGroups() != null && !user.getGroups().isEmpty();
-
-		// Calculating user's rank in each group
+		
+		// If the user has groups, calculate the user's rank in each group and store details about each of those groups
+		// to display in the JSP
 		if (userHasGroups) {
 			List<UserGroupInfoDTO> usersGroupsInfo = new ArrayList<UserGroupInfoDTO>();
 
@@ -93,7 +94,8 @@ public class MemberController {
 				usersGroupsInfo.add(userGroupInfoDTO);
 
 			}
-
+			
+			// Add all information about all the user's groups to the ModelAndView
 			mav.addObject("usersGroupsInfo", usersGroupsInfo);
 
 		}

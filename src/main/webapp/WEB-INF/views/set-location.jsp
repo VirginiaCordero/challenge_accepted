@@ -21,15 +21,13 @@
 		<p>In order to create challenges near you, we need you to share
 			your location with us.</p>
 		<p>Don't worry. It's in a safe place.</p>
-		<p>Click the button to get your coordinates.</p>
-		
-		<button onclick="getLocation()">Get My Location!</button>
-		<h2>distraction</h2>
-		<form action="/set-location" class="form-inline my-2 my-lg-0"
+		<h2>Set Your Current Location for Searches</h2>		
+		<form action="/set-location" id="location-form" class="form-inline my-2 my-lg-0"
 			method="POST" role="form">
-			<input id="location" value="" name="location">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Save My Location!</button>
+			<input hidden id="location" value="" name="location">
 		</form>
+		<button onclick="getLocation()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Save My Current Location!</button>
+		<p>Sometimes this can take a few seconds...</p>
 		<script>
 			let x = document.getElementById("location");
 			
@@ -44,6 +42,8 @@
 				var coord = position.coords.latitude + ","
 						+ position.coords.longitude;
 				x.value = coord;
+				document.getElementById("location-form").submit();
+
 			}
 		</script>
 </body>
