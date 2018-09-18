@@ -138,6 +138,7 @@
 
 		<!-- your statistics -->
 		<div class="card text-white bg-success mb-4" style="width: 36rem;">
+			<img class="card-img-top" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=AIzaSyCc6HcCgbyNatSmegAr5imYoyocdQwx8a0" alt="Card image cap">
 			<div class="card-body">
 				<h3 class="card-title">Next Challenge</h3>
 				<p class="card-text">${ nextChallenge.name }</p>
