@@ -95,8 +95,10 @@
 		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 			<div class="card-body">
 				<h3 class="card-title">Your groups</h3>
-				<c:forEach items="${ user.groups }" var="group">
-					<p class="card-text">${ group.name }:${ group.description }</p>
+				<c:forEach items="${ usersGroupsInfo }" var="group">
+					<p class="card-text">${ group.name }: ${ group.description }</p>
+					<p class="card-text">Rank: ${ group.userRank } out of ${ group.numMembers }</p>
+					<p><a href="/group-leaderboard?groupId=${ group.id }">See Group Leaderboard!</a>
 				</c:forEach>
 			</div>
 		</div>
@@ -172,7 +174,8 @@
 		</form>
 
 		<!-- your statistics -->
-		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
+		<div class="card text-white bg-success mb-4" style="width: 36rem;">
+			<img class="card-img-top" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=AIzaSyCc6HcCgbyNatSmegAr5imYoyocdQwx8a0" alt="Card image cap">
 			<div class="card-body">
 				<h3 class="card-title">Next Challenge</h3>
 				<p class="card-text">${ nextChallenge.name }</p>

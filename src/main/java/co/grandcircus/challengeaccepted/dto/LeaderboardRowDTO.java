@@ -60,6 +60,4 @@ public class LeaderboardRowDTO {
 		this.completionRate = completionRate;
 	}
 	
-	
-
 }

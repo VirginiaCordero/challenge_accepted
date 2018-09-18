@@ -21,6 +21,7 @@ import co.grandcircus.challengeaccepted.dao.GroupDao;
 import co.grandcircus.challengeaccepted.dao.UserChallengeDao;
 import co.grandcircus.challengeaccepted.dao.UserDao;
 import co.grandcircus.challengeaccepted.dto.LeaderboardRowDTO;
+import co.grandcircus.challengeaccepted.dto.UserGroupInfoDTO;
 import co.grandcircus.challengeaccepted.entity.Challenge;
 import co.grandcircus.challengeaccepted.entity.Group;
 import co.grandcircus.challengeaccepted.entity.User;
@@ -62,10 +63,9 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView("dashboard");
 		mav.addObject("groups", groupDao.findAll());
 
-		PlaceDetailResult placeDetailResult = null;
-
 		UserChallenge acceptedChallenge = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
 
+		PlaceDetailResult placeDetailResult = null;
 		Challenge displayedChallenge = null;
 
 		// boolean userHasNoGroups = user.getGroups() == null ||
@@ -73,6 +73,30 @@ public class MemberController {
 		// boolean userHasGroups = !userHasNoGroups;
 
 		boolean userHasGroups = user.getGroups() != null && !user.getGroups().isEmpty();
+
+		// Calculating user's rank in each group
+		if (userHasGroups) {
+			List<UserGroupInfoDTO> usersGroupsInfo = new ArrayList<UserGroupInfoDTO>();
+
+			for (Group group : user.getGroups()) {
+				// Make a DTO to hold this information
+				UserGroupInfoDTO userGroupInfoDTO = new UserGroupInfoDTO();
+
+				// Set all the relevant fields
+				userGroupInfoDTO.setId(group.getId());
+				userGroupInfoDTO.setName(group.getName());
+				userGroupInfoDTO.setDescription(group.getDescription());
+				userGroupInfoDTO.setUserRank(getUserRankInGroup(user.getId(), group.getId()));
+				userGroupInfoDTO.setNumMembers(group.getUsers().size());
+
+				// Add the DTO to the list
+				usersGroupsInfo.add(userGroupInfoDTO);
+
+			}
+
+			mav.addObject("usersGroupsInfo", usersGroupsInfo);
+
+		}
 
 		if (userHasGroups) {
 			// if user has an accepted challenge
@@ -90,8 +114,6 @@ public class MemberController {
 				}
 			}
 		}
-
-		// TODO: handle what happens when there is no challenge to display!
 
 		if (displayedChallenge != null) {
 
@@ -145,23 +167,27 @@ public class MemberController {
 		mav.addObject("nextChallengeDetails", placeDetailResult);
 
 		// All of this is for seeing stats about a specific challenge
-		if (displayedChallenge!=null) {
-			
-			Integer displayedChallengeNumAccepts = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "accepted");
-			Integer displayedChallengeNumDeclines = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "declined");
-			Integer displayedChallengeNumCompleted = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "completed");
-			Integer displayedChallengeNumFailed = userChallengeDao.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "failed");
-			
+		if (displayedChallenge != null) {
+
+			Integer displayedChallengeNumAccepts = userChallengeDao
+					.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "accepted");
+			Integer displayedChallengeNumDeclines = userChallengeDao
+					.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "declined");
+			Integer displayedChallengeNumCompleted = userChallengeDao
+					.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "completed");
+			Integer displayedChallengeNumFailed = userChallengeDao
+					.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "failed");
+
 			// Gets the user statuses for the displayed challenge
 			List<ChallengeStatus> challengeStatuses = userChallengeDao.getChallengeStatuses(displayedChallenge.getId());
-			
+
 			List<String> accepted = new ArrayList<String>();
 			List<String> declined = new ArrayList<String>();
 			List<String> completed = new ArrayList<String>();
 			List<String> failed = new ArrayList<String>();
-			
+
 			for (ChallengeStatus challengeStatus : challengeStatuses) {
-				
+
 				if ("accepted".equalsIgnoreCase(challengeStatus.getStatus())) {
 					accepted.add(challengeStatus.getFirstName() + " " + challengeStatus.getLastName());
 				} else if ("declined".equalsIgnoreCase(challengeStatus.getStatus())) {
@@ -171,21 +197,21 @@ public class MemberController {
 				} else {
 					failed.add(challengeStatus.getFirstName() + " " + challengeStatus.getLastName());
 				}
-				
+
 			}
-			
+
 			mav.addObject("displayedChallengeAcceptList", accepted);
 			mav.addObject("displayedChallengeDeclineList", declined);
 			mav.addObject("displayedChallengeCompleteList", completed);
 			mav.addObject("displayedChallengeFailList", failed);
-			
+
 			mav.addObject("displayedChallengeNumAccepts", displayedChallengeNumAccepts);
 			mav.addObject("displayedChallengeNumDeclines", displayedChallengeNumDeclines);
 			mav.addObject("displayedChallengeNumCompleted", displayedChallengeNumCompleted);
 			mav.addObject("displayedChallengeNumFailed", displayedChallengeNumFailed);
-			
+
 		}
-		
+
 		return mav;
 
 	}
@@ -290,32 +316,32 @@ public class MemberController {
 
 		return new ModelAndView("redirect:/dashboard");
 	}
-	
+
 	@RequestMapping("group-leaderboard")
 	public ModelAndView showGroupLeaderboard(@RequestParam("groupId") Long groupId) {
 		return new ModelAndView("leaderboard", "leaderboard", getGroupLeaderboard(groupId));
-		
+
 	}
-	
+
 	// Method for getting a "leaderboard" for a specific group
 	private List<LeaderboardRowDTO> getGroupLeaderboard(Long groupId) {
 		List<LeaderboardRow> getLeaderboardQueryResult = userChallengeDao.getLeaderboard(groupId);
-		
+
 		int rowNumber = 1;
 		int dispRank = 1;
 		Integer prevRowNumComp = null;
 		Integer prevRowCompletionRate = null;
 		List<LeaderboardRowDTO> leaderboard = new ArrayList<LeaderboardRowDTO>();
-		
+
 		for (LeaderboardRow row : getLeaderboardQueryResult) {
-			
+
 			// If the current row is different from the last row, update the disp rank
 			// to the current row number (otherwise, there is a tie and the disp rank should
 			// not yet be updated).
-			if (row.getCompleted()!=prevRowNumComp || row.getCompletionRate()!=prevRowCompletionRate) {
+			if (row.getCompleted() != prevRowNumComp || row.getCompletionRate() != prevRowCompletionRate) {
 				dispRank = rowNumber;
 			}
-			
+
 			// Assign current row's values and current dispRank to a DTO
 			LeaderboardRowDTO rowDTO = new LeaderboardRowDTO();
 			rowDTO.setUserId(row.getUserId());
@@ -325,26 +351,41 @@ public class MemberController {
 			rowDTO.setCompleted(row.getCompleted());
 			rowDTO.setDeclined(row.getDeclined());
 			rowDTO.setFailed(row.getFailed());
-			
-			if (row.getCompletionRate()==null ) {
+
+			if (row.getCompletionRate() == null) {
 				rowDTO.setCompletionRate(100);
 			} else {
 				rowDTO.setCompletionRate(row.getCompletionRate());
 			}
-			
+
 			// Add DTO to the leaderboard
 			leaderboard.add(rowDTO);
-			
+
 			// Assign "scored" values for comparison in the next iteration of this loop
 			// and increment the row number to reassign dispRank after any ties.
 			prevRowNumComp = row.getCompleted();
 			prevRowCompletionRate = row.getCompletionRate();
 			rowNumber++;
-			
+
 		}
-		
+
 		return leaderboard;
-		
+
 	}
+
+	private Integer getUserRankInGroup(Long userId, Long groupId) {
+		List<LeaderboardRowDTO> groupLeaderboard = getGroupLeaderboard(groupId);
+
+		Integer userRank = null;
+
+		for (LeaderboardRowDTO row : groupLeaderboard) {
+			if (userId == row.getUserId()) {
+				userRank = row.getRank();
+				break;
+			}
+		}
+
+		return userRank;
+	}		
 	 
 }
