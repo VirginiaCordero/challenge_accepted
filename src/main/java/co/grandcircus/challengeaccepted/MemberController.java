@@ -21,6 +21,7 @@ import co.grandcircus.challengeaccepted.dao.GroupDao;
 import co.grandcircus.challengeaccepted.dao.UserChallengeDao;
 import co.grandcircus.challengeaccepted.dao.UserDao;
 import co.grandcircus.challengeaccepted.dto.LeaderboardRowDTO;
+import co.grandcircus.challengeaccepted.dto.UserGroupInfoDTO;
 import co.grandcircus.challengeaccepted.entity.Challenge;
 import co.grandcircus.challengeaccepted.entity.Group;
 import co.grandcircus.challengeaccepted.entity.User;
@@ -62,10 +63,9 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView("dashboard");
 		mav.addObject("groups", groupDao.findAll());
 
-		PlaceDetailResult placeDetailResult = null;
-
 		UserChallenge acceptedChallenge = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
 
+		PlaceDetailResult placeDetailResult = null;
 		Challenge displayedChallenge = null;
 
 		// boolean userHasNoGroups = user.getGroups() == null ||
@@ -73,6 +73,30 @@ public class MemberController {
 		// boolean userHasGroups = !userHasNoGroups;
 
 		boolean userHasGroups = user.getGroups() != null && !user.getGroups().isEmpty();
+
+		// Calculating user's rank in each group
+		if (userHasGroups) {
+			List<UserGroupInfoDTO> usersGroupsInfo = new ArrayList<UserGroupInfoDTO>();
+
+			for (Group group : user.getGroups()) {
+				// Make a DTO to hold this information
+				UserGroupInfoDTO userGroupInfoDTO = new UserGroupInfoDTO();
+
+				// Set all the relevant fields
+				userGroupInfoDTO.setId(group.getId());
+				userGroupInfoDTO.setName(group.getName());
+				userGroupInfoDTO.setDescription(group.getDescription());
+				userGroupInfoDTO.setUserRank(getUserRankInGroup(user.getId(), group.getId()));
+				userGroupInfoDTO.setNumMembers(group.getUsers().size());
+
+				// Add the DTO to the list
+				usersGroupsInfo.add(userGroupInfoDTO);
+
+			}
+
+			mav.addObject("usersGroupsInfo", usersGroupsInfo);
+
+		}
 
 		if (userHasGroups) {
 			// if user has an accepted challenge

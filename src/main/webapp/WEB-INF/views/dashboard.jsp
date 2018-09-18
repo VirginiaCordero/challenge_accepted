@@ -58,8 +58,10 @@
 		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 			<div class="card-body">
 				<h3 class="card-title">Your groups</h3>
-				<c:forEach items="${ user.groups }" var="group">
+				<c:forEach items="${ usersGroupsInfo }" var="group">
 					<p class="card-text">${ group.name }: ${ group.description }</p>
+					<p class="card-text">Rank: ${ group.userRank } out of ${ group.numMembers }</p>
+					<p><a href="/group-leaderboard?groupId=${ group.id }">See Group Leaderboard!</a>
 				</c:forEach>
 			</div>
 		</div>
