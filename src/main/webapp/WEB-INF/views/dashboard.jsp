@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<!-- welcome -->
-		<div class="card bg-light mb-3" style="max-width: 20rem;">
+		<div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
 			<div class="card-header">Welcome ${ user.firstName } ${ user.lastName }</div>
 			<div class="card-body">
 				<h4 class="card-title">Your Stats</h4>
@@ -65,7 +65,7 @@
 			</div>
 		</div>
 		<!--  create a new group -->
-		<div class="card text-white bg-primary mb-4" style="width: 50rem;">
+		<div class="card text-white bg-primary mb-4" style="width: 20rem;">
 			<div class="card-header">Create a new group</div>
 			<div class="card-body">
 				<form action="create-group" method="post">
@@ -85,98 +85,101 @@
 					</div>
 					<div class="form-group row">
 						<div class="col-sm-7">
-							<button type="submit" class="btn btn-secondary">Submit</button>
+							<button type="submit" class="btn btn-warning">Submit</button>
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
 		<!--  join a group -->
-		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
-			<div class="header">Join a new group</div>
+		<div class="card text-white bg-primary mb-4" style="width: 20rem;">
+			<div class="card-header">Join a new group</div>
 			<div class="card-body">
 				<form action="/join-group" method="post">
 					<div class="form-group row">
-						<label for="name" class="col-sm-4 col-form-label">SelectGroup</label>
-					</div>
-					<div class="col-sm-4">
-						<select required id="group" name="group">
-							<option value="">Select Group</option>
+						<div class="input-group col-sm-9">
+							<select required id="group" name="group" class="custom-select"
+								id="inputGroupSelect01">
+								<option value="">Select Group</option>
 								<c:forEach items="${ groups }" var="group">
 									<option value="${ group.id }">${ group.name }</option>
 								</c:forEach>
-						</select>
+							</select>
+						</div>
 					</div>
-					<div class="col-sm-4">
-						<button type="submit">Join +</button>
+					<div class="form-group row">
+						<div class="col-sm-7">
+							<button type="submit" class="btn btn-success">Join +</button>
+						</div>
 					</div>
 				</form>
 			</div>
 		</div>
-	</div>
-	<!--  leave a grouo -->
-	<form action="/leave-group" method="post">
-		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
-			<h3 class="card-title">Leave a group</h3>
-			<div class="form-group row">
-				<label for="name" class="col-sm-4 col-form-label">Select
-					Group</label>
-				<div class="col-sm-4">
-					<select required id="group" name="group">
-						<option value="">Select Group</option>
-						<c:forEach items="${ user.groups }" var="group">
-							<option value="${ group.id }">${ group.name }</option>
-						</c:forEach>
-					</select>
-				</div>
-				<div class="col-sm-3">
-					<button type="submit">Leave -</button>
-				</div>
+		<!--  leave a group -->
+		<div class="card text-white bg-primary mb-4" style="width: 20rem;">
+			<div class="card-header">Leave a group</div>
+			<div class="card-body">
+				<form action="/leave-group" method="post">
+					<div class="form-group row">
+						<div class="col-sm-9">
+							<select required id="group" name="group" class="custom-select" id="inputGroupSelect01">
+								<option value="">Select Group</option>
+								<c:forEach items="${ user.groups }" var="group">
+									<option value="${ group.id }">${ group.name }</option>
+								</c:forEach>
+							</select>
+						</div>
+						</div>
+						<div class="form-group row">
+						<div class="col-sm-7">
+							<button type="submit" class="btn btn-danger">Leave -</button>
+						</div>
+						</div>
+				</form>
+			</div>
+		</div>	
+	<!-- your statistics -->
+		<div class="card text-white bg-success mb-4" style="width: 36rem;">
+			<img class="card-img-top"
+				src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=${ apiKey }"
+				alt="Card image cap">
+			<div class="card-body">
+				<h3 class="card-title">Next Challenge</h3>
+				<p class="card-text">${ nextChallenge.name }</p>
+				<p class="card-text">${ nextChallenge.description }</p>
+				<h3 class="card-title">Challenge Details</h3>
+				<p class="card-text">${ nextChallengeDetails.detailResult.name}</p>
+				<p class="card-text">${ nextChallengeDetails.detailResult.formattedAddress}</p>
+				<p class="card-text">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
+				<p class="card-text">${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>
+				<h3 class="card-title">Challenge Accepted</h3>
+				<c:choose>
+					<c:when test="${ not empty acceptedChallengeExists }">
+						<a
+							href="/challenge-response?response=completed&challengeId=${ nextChallenge.id }">Challenge
+							Completed</a>
+						<a
+							href="/challenge-response?response=failed&challengeId=${ nextChallenge.id }">I
+							Have Failed</a>
+					</c:when>
+					<c:when test="${ not empty nextChallenge }">
+						<a
+							href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge
+							Accepted</a>
+						<a
+							href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
+					</c:when>
+					<c:otherwise>
+						<p>Join more groups, loser.</p>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
-	</form>
+</div>
+		<!--last div-->
 
-
-		<!-- your statistics -->
-	<div class="card text-white bg-success mb-4" style="width: 36rem;">
-		<img class="card-img-top" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=${ apiKey }" alt="Card image cap">
-		<div class="card-body">
-			<h3 class="card-title">Next Challenge</h3>
-			<p class="card-text">${ nextChallenge.name }</p>
-			<p class="card-text">${ nextChallenge.description }</p>
-			<h3 class="card-title">Challenge Details</h3>
-			<p class="card-text">${ nextChallengeDetails.detailResult.name}</p>
-			<p class="card-text">${ nextChallengeDetails.detailResult.formattedAddress}</p>
-			<p class="card-text">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
-			<p class="card-text">${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p>
-			<h3 class="card-title">Challenge Accepted</h3>
-			<c:choose>
-				<c:when test="${ not empty acceptedChallengeExists }">
-					<a
-						href="/challenge-response?response=completed&challengeId=${ nextChallenge.id }">Challenge
-						Completed</a>
-					<a
-						href="/challenge-response?response=failed&challengeId=${ nextChallenge.id }">I
-						Have Failed</a>
-				</c:when>
-				<c:when test="${ not empty nextChallenge }">
-					<a
-						href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge
-						Accepted</a>
-					<a
-						href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
-				</c:when>
-				<c:otherwise>
-					<p>Join more groups, loser.</p>
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</div>
-
-	<!--last div-->
-
-	<!-- ==================== Legacy Code, but functional ==================== -->
-	<%-- <p>${ user.firstName }${ user.lastName }</p>
+		<!-- ==================== Legacy Code, but functional ==================== -->
+		<%-- <p>${ user.firstName }${ user.lastName }</p>
 >>>>>>> Stashed changes
 	<p>Your Groups:</p>
 
@@ -220,13 +223,13 @@
 		</p>
 	</form> --%>
 
-	<%-- <p>Next Challenge: ${ nextChallenge.name } -- ${ nextChallenge.description }</p>
+		<%-- <p>Next Challenge: ${ nextChallenge.name } -- ${ nextChallenge.description }</p>
 	<h3>Challenge Details:</h3>
 	<p>${ nextChallengeDetails.detailResult.formattedAddress}</p>
 	<p>${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
 	<p>${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p> --%>
 
-	<%-- <c:choose>
+		<%-- <c:choose>
 		<c:when test="${ not empty acceptedChallengeExists }">
 			<a
 				href="/challenge-response?response=completed&challengeId=${ nextChallenge.id }">Challenge
@@ -246,7 +249,7 @@
 			<p>Join more groups, loser.</p>
 		</c:otherwise>
 	</c:choose> --%>
-	<!-- <p>
+		<!-- <p>
 		<a href="/nearby-search">Select Location for a Challenge</a>
 	</p> -->
 </body>
