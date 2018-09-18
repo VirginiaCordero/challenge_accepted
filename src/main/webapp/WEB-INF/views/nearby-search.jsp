@@ -71,7 +71,9 @@
 		
 		
 		<p>
-			<a href="">Previous 20 Results</a> -- <a href="">Next 20 Results</a>
+			<c:if test="${ not empty nearbySearchResults.nextPageToken }">
+				<a href="/nearby-search?pageToken=${ nearbySearchResults.nextPageToken }">Next 20 Results</a>
+			</c:if>
 		<p>
 		
 	</main>

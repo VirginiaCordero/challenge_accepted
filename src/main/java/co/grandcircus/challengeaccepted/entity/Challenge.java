@@ -22,7 +22,6 @@ public class Challenge {
 	private String location;
 	private Long creationDate;
 	private LocalDate expirationDate;
-	private String type;
 	private String placeId;
 
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -80,14 +79,6 @@ public class Challenge {
 
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getPlaceId() {

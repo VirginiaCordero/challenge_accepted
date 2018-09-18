@@ -31,18 +31,29 @@ public class GooglePlacesApiController {
 
 	@RequestMapping("/nearby-search")
 	public ModelAndView apiTest(@RequestParam(value = "keyword", required = false) String keyword,
+								@RequestParam(value = "pageToken", required = false) String pageToken,
 								@SessionAttribute(name = "user", required = false) User user) {
 
+		//TODO: add login redirect if no user
+		
 		String location = user.getLocation();
 		Integer radius = 2000;
 
 		RestTemplate restTemplate = new RestTemplate();
-
-		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + 
+		String url = null;
+		
+		// For pagination
+		if (pageToken!=null && !pageToken.isEmpty()) {
+			url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+						 "pagetoken=" + pageToken +
+						 "&key=" + apiKey;
+		} else {
+			url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + 
 					 "location=" + location + 
 					 "&radius=" + radius + 
 					 "&keyword=" + keyword + 
 					 "&key=" + apiKey;
+		}
 
 		NearbySearchResults nearbySearchResults = restTemplate.getForObject(url, NearbySearchResults.class);
 		
