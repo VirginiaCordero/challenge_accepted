@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Nearby Search</title>
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css" />
+	href="https://bootswatch.com/4/cyborg/bootstrap.css" />
 <!-- Custom CSS goes below Bootstrap CSS -->
 <link rel="stylesheet" href="/style.css" />
 </head>

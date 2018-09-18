@@ -10,7 +10,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Registration</title>
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/darkly/bootstrap.min.css" />
+	href="https://bootswatch.com/4/cyborg/bootstrap.css" />
 <!-- Custom CSS goes below Bootstrap CSS -->
 <link rel="stylesheet" href="/style.css" />
 </head>
@@ -28,6 +28,7 @@
 		</form>
 		<button onclick="getLocation()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Save My Current Location!</button>
 		<p>Sometimes this can take a few seconds...</p>
+		<div class="loader"></div>
 		<script>
 			let x = document.getElementById("location");
 			
