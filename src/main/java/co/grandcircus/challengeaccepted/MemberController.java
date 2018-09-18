@@ -386,6 +386,6 @@ public class MemberController {
 		}
 
 		return userRank;
-	}
-
+	}		
+	 
 }
