@@ -30,8 +30,9 @@ public class ChallengeAcceptedController {
 		session.setAttribute("user", user);
 		//should this be here??
 		redir.addFlashAttribute("message", "Logged in.");
-		return new ModelAndView("redirect:/dashboard");
-
+		return new ModelAndView("redirect:/set-location");
 	}
+	
+	
 	
 }

@@ -14,10 +14,44 @@
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-<%@ include file="navbar.jsp" %>
+	<%@ include file="navbar.jsp"%>
 	<div class="container">
+		<div class="card mb-3">
+			<h3 class="card-header">Card header</h3>
+			<div class="card-body">
+				<h5 class="card-title">Special title treatment</h5>
+				<h6 class="card-subtitle text-muted">Support card subtitle</h6>
+			</div>
+			<img style="height: 200px; width: 100%; display: block;"
+				src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+				alt="Card image">
+			<div class="card-body">
+				<p class="card-text">Some quick example text to build on the
+					card title and make up the bulk of the card's content.</p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">Cras justo odio</li>
+				<li class="list-group-item">Dapibus ac facilisis in</li>
+				<li class="list-group-item">Vestibulum at eros</li>
+			</ul>
+			<div class="card-body">
+				<a href="#" class="card-link">Card link</a> <a href="#"
+					class="card-link">Another link</a>
+			</div>
+			<div class="card-footer text-muted">2 days ago</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Card title</h4>
+				<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+				<p class="card-text">Some quick example text to build on the
+					card title and make up the bulk of the card's content.</p>
+				<a href="#" class="card-link">Card link</a> <a href="#"
+					class="card-link">Another link</a>
+			</div>
+		</div>
 		<!-- dashboard header -->
-		<div class="card text-white bg-danger mb-4" style="width: 36rem;">
+		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 			<div class="card-body">
 				<h3 class="card-title">Dashboard</h3>
 				<img class="card-img-top" src="https://via.placeholder.com/360x100"
@@ -32,9 +66,9 @@
 			</div>
 		</div>
 		<!-- your statistics -->
-		<div class="card text-white bg-success mb-4" style="width: 36rem;">
+		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 			<div class="card-body">
-				<h3 class="card-title">Statistics</h3>
+				<h3 class="card-title">Your Stats</h3>
 				<p class="card-text">Accepted: ${ accepted }:</p>
 				<p class="card-text">Declined: ${ declined }:</p>
 				<p class="card-text">Completed: ${ completed }</p>
@@ -45,12 +79,15 @@
 			</div>
 		</div>
 		<!-- displayed challenge statistics -->
-		<div class="card text-white bg-success mb-4" style="width: 36rem;">
+		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 			<div class="card-body">
 				<h3 class="card-title">Displayed Challenge Statistics</h3>
-				<p class="card-text">Accepted: ${ displayedChallengeNumAccepts } ${ displayedChallengeAcceptList }</p>
-				<p class="card-text">Declined: ${ displayedChallengeNumDeclines } ${ displayedChallengeDeclineList }</p>
-				<p class="card-text">Completed: ${ displayedChallengeNumCompleted } ${ displayedChallengeCompleteList }</p>
+				<p class="card-text">Accepted: ${ displayedChallengeNumAccepts }
+					${ displayedChallengeAcceptList }</p>
+				<p class="card-text">Declined: ${ displayedChallengeNumDeclines }
+					${ displayedChallengeDeclineList }</p>
+				<p class="card-text">Completed: ${ displayedChallengeNumCompleted }
+					${ displayedChallengeCompleteList }</p>
 				<p class="card-text">Failed: ${ displayedChallengeNumFailed } ${ displayedChallengeFailList }</p>
 			</div>
 		</div>
@@ -59,14 +96,14 @@
 			<div class="card-body">
 				<h3 class="card-title">Your groups</h3>
 				<c:forEach items="${ user.groups }" var="group">
-					<p class="card-text">${ group.name }: ${ group.description }</p>
+					<p class="card-text">${ group.name }:${ group.description }</p>
 				</c:forEach>
 			</div>
 		</div>
 
 		<!--  create a new grouo -->
 		<form action="create-group" method="post">
-			<div class="card text-white bg-warning mb-4" style="width: 36rem;">
+			<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 				<h3 class="card-title">Create a new group</h3>
 				<div class="form-group row">
 					<label for="name" class="col-sm-4 col-form-label">Group</label>
@@ -92,7 +129,7 @@
 
 		<!--  join a grouo -->
 		<form action="/join-group" method="post">
-			<div class="card text-white bg-warning mb-4" style="width: 36rem;">
+			<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 				<h3 class="card-title">Join a new group</h3>
 				<div class="form-group row">
 					<label for="name" class="col-sm-4 col-form-label">Select
@@ -114,7 +151,7 @@
 
 		<!--  leave a grouo -->
 		<form action="/leave-group" method="post">
-			<div class="card text-white bg-warning mb-4" style="width: 36rem;">
+			<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 				<h3 class="card-title">Leave a group</h3>
 				<div class="form-group row">
 					<label for="name" class="col-sm-4 col-form-label">Select
@@ -135,7 +172,7 @@
 		</form>
 
 		<!-- your statistics -->
-		<div class="card text-white bg-success mb-4" style="width: 36rem;">
+		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 			<div class="card-body">
 				<h3 class="card-title">Next Challenge</h3>
 				<p class="card-text">${ nextChallenge.name }</p>
@@ -168,15 +205,7 @@
 				</c:choose>
 			</div>
 		</div>
-		<div class="card text-white bg-success mb-4" style="width: 36rem;">
-			<div class="card-body">
-				<h3 class="card-title">Location</h3>
-				<p>
-					<a href="/nearby-search">Select Location for a Challenge</a>
-				</p>
-			</div>
-		</div>
-	</div>
+		
 	<!--last div-->
 
 	<!-- ==================== Legacy Code, but functional ==================== -->

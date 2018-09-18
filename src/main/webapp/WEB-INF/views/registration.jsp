@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>location
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -70,7 +71,7 @@
 						<h5>You will receive an email to complete the registration
 							and validation process.</h5>
 						<h5>Be sure to check your spam folders.</h5>
-						<input id="location" value="" name="location">
+ 						<input id="location" value="" name="location">
 					</fieldset>
 				</form>
 			</div>
