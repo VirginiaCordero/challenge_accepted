@@ -91,8 +91,6 @@ public class MemberController {
 			}
 		}
 
-		// TODO: handle what happens when there is no challenge to display!
-
 		if (displayedChallenge != null) {
 
 			RestTemplate restTemplate = new RestTemplate();
