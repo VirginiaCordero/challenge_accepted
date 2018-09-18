@@ -17,6 +17,7 @@
 	<%@ include file="navbar.jsp"%>
 	<div class="container">
 		<!-- dashboard header -->
+		<div class="card-columns">
 		<div class="card text-white bg-primary mb-4" style="width: 36rem;">
 			<div class="card-body">
 				<h3 class="card-title">Dashboard</h3>
@@ -28,14 +29,38 @@
 		<div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
 			<div class="card-header">Welcome ${ user.firstName } ${ user.lastName }</div>
 			<div class="card-body">
-				<h4 class="card-title">Your Stats</h4>
+				<div class="progress">
+				<p class="card-text">Completed:</p>
+					<div class="progress-bar bg-success" role="progressbar"
+						style="width: ${ completed }%" aria-valuenow="25" aria-valuemin="0"
+						aria-valuemax="100"></div>
+				</div>
+				<div class="progress">
+				<p class="card-text">Accepted:</p>
+					<div class="progress-bar bg-info" role="progressbar"
+						style="width: ${ accepted }%" aria-valuenow="50" aria-valuemin="0"
+						aria-valuemax="100"></div>
+				</div>
+				<div class="progress">
+				<p class="card-text">Declined:</p>
+					<div class="progress-bar bg-warning" role="progressbar"
+						style="width: ${ declined }%" aria-valuenow="75" aria-valuemin="0"
+						aria-valuemax="100"></div>
+				</div>
+				<div class="progress">
+				<p class="card-text">Failed:</p>
+					<div class="progress-bar bg-danger" role="progressbar"
+						style="width: ${ failed }%" aria-valuenow="100" aria-valuemin="0"
+						aria-valuemax="100"></div>
+				</div>
+				<%-- 			<h4 class="card-title">Your Stats</h4>
 				<p class="card-text">Accepted: ${ accepted }:</p>
 				<p class="card-text">Declined: ${ declined }:</p>
 				<p class="card-text">Completed: ${ completed }</p>
 				<p class="card-text">Failed: ${ failed }</p>
 				<p class="card-text">Acceptability: ${ acceptDeclineRatio }</p>
 				<p class="card-text">Completionistabilityness: ${ completeFailRatio }</p>
-				<p class="card-text">Created: ${ created }</p>
+				<p class="card-text">Created: ${ created }</p> --%>
 			</div>
 		</div>
 		<!-- displayed challenge statistics -->
@@ -59,8 +84,8 @@
 					<p class="card-text">${ group.name }:${ group.description }</p>
 					<p class="card-text">Rank: ${ group.userRank } out of ${ group.numMembers }</p>
 					<p>
-						<a href="/group-leaderboard?groupId=${ group.id }">See Group
-							Leaderboard!</a>
+					<button type="button" action="/group-leaderboard?groupId=${ group.id }" class="btn btn-info">See Group
+							Leaderboard!</button>
 				</c:forEach>
 			</div>
 		</div>
@@ -122,24 +147,34 @@
 				<form action="/leave-group" method="post">
 					<div class="form-group row">
 						<div class="col-sm-9">
-							<select required id="group" name="group" class="custom-select" id="inputGroupSelect01">
+							<select required id="group" name="group" class="custom-select"
+								id="inputGroupSelect01">
 								<option value="">Select Group</option>
 								<c:forEach items="${ user.groups }" var="group">
 									<option value="${ group.id }">${ group.name }</option>
 								</c:forEach>
 							</select>
 						</div>
-						</div>
-						<div class="form-group row">
+					</div>
+					<div class="form-group row">
 						<div class="col-sm-7">
 							<button type="submit" class="btn btn-danger">Leave -</button>
 						</div>
-						</div>
+					</div>
 				</form>
 			</div>
-		</div>	
-	<!-- your statistics -->
-		<div class="card text-white bg-success mb-4" style="width: 36rem;">
+		</div>
+		<!-- your statistics -->
+<!-- 		<div class="jumbotron">
+  <h1 class="display-3">Hello, world!</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </p>
+</div> -->		
+		<div class="jumbotron" style="width: 36rem;">
 			<img class="card-img-top"
 				src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=${ apiKey }"
 				alt="Card image cap">
@@ -170,16 +205,17 @@
 							href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
 					</c:when>
 					<c:otherwise>
-						<p>Join more groups, loser.</p>
+						<p>Explore the world, join more groups!</p>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
-</div>
-		<!--last div-->
+		</div>
+	</div>
+	<!--last div-->
 
-		<!-- ==================== Legacy Code, but functional ==================== -->
-		<%-- <p>${ user.firstName }${ user.lastName }</p>
+	<!-- ==================== Legacy Code, but functional ==================== -->
+	<%-- <p>${ user.firstName }${ user.lastName }</p>
 >>>>>>> Stashed changes
 	<p>Your Groups:</p>
 
@@ -223,13 +259,13 @@
 		</p>
 	</form> --%>
 
-		<%-- <p>Next Challenge: ${ nextChallenge.name } -- ${ nextChallenge.description }</p>
+	<%-- <p>Next Challenge: ${ nextChallenge.name } -- ${ nextChallenge.description }</p>
 	<h3>Challenge Details:</h3>
 	<p>${ nextChallengeDetails.detailResult.formattedAddress}</p>
 	<p>${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
 	<p>${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p> --%>
 
-		<%-- <c:choose>
+	<%-- <c:choose>
 		<c:when test="${ not empty acceptedChallengeExists }">
 			<a
 				href="/challenge-response?response=completed&challengeId=${ nextChallenge.id }">Challenge
@@ -249,7 +285,7 @@
 			<p>Join more groups, loser.</p>
 		</c:otherwise>
 	</c:choose> --%>
-		<!-- <p>
+	<!-- <p>
 		<a href="/nearby-search">Select Location for a Challenge</a>
 	</p> -->
 </body>
