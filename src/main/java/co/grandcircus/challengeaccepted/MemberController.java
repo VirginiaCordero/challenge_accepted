@@ -62,19 +62,21 @@ public class MemberController {
 		// if the user is logged in, proceed as normal.
 		ModelAndView mav = new ModelAndView("dashboard");
 		mav.addObject("groups", groupDao.findAll());
-		
+
 		// Get the user's currently-accepted challenge, if any! This might be null
 		UserChallenge acceptedChallenge = userChallengeDao.findByUserIdEqualsAndStatusIs(user.getId(), "accepted");
 
-		// Declare variables for the challenge to be displayed, and the results of a google place API call for 
+		// Declare variables for the challenge to be displayed, and the results of a
+		// google place API call for
 		// that challenge's location.
 		Challenge displayedChallenge = null;
 		PlaceDetailResult placeDetailResult = null;
-		
+
 		// Initialize a boolean for whethe or not the user belongs to any groups.
 		boolean userHasGroups = user.getGroups() != null && !user.getGroups().isEmpty();
-		
-		// If the user has groups, calculate the user's rank in each group and store details about each of those groups
+
+		// If the user has groups, calculate the user's rank in each group and store
+		// details about each of those groups
 		// to display in the JSP
 		if (userHasGroups) {
 			List<UserGroupInfoDTO> usersGroupsInfo = new ArrayList<UserGroupInfoDTO>();
@@ -88,8 +90,8 @@ public class MemberController {
 				userGroupInfoDTO.setName(group.getName());
 				userGroupInfoDTO.setDescription(group.getDescription());
 				userGroupInfoDTO.setUserRank(getUserRankInGroup(user.getId(), group.getId()));
-				
-				if (group.getUsers()==null) {
+
+				if (group.getUsers() == null) {
 					// This group was just created and for some reason
 					// the database hasn't updated
 					userGroupInfoDTO.setNumMembers(1);
@@ -97,12 +99,12 @@ public class MemberController {
 					// This group is already in the database
 					userGroupInfoDTO.setNumMembers(group.getUsers().size());
 				}
-				
+
 				// Add the DTO to the list
 				usersGroupsInfo.add(userGroupInfoDTO);
 
 			}
-			
+
 			// Add all information about all the user's groups to the ModelAndView
 			mav.addObject("usersGroupsInfo", usersGroupsInfo);
 
@@ -241,7 +243,7 @@ public class MemberController {
 
 		User dbUser = userDao.findById(user.getId()).orElse(null);
 		dbUser.getGroups().add(group);
-		
+
 		userDao.save(dbUser);
 		session.setAttribute("user", dbUser);
 
@@ -397,6 +399,6 @@ public class MemberController {
 		}
 
 		return userRank;
-	}		
-	 
+	}
+
 }
