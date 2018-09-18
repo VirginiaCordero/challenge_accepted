@@ -365,7 +365,15 @@ public class MemberController {
 			rowDTO.setDeclined(row.getDeclined());
 			rowDTO.setFailed(row.getFailed());
 
-			if (row.getCompletionRate() == null) {
+			
+			// If the User has completed nothing
+			if (row.getCompleted()==0) {
+				// Set completion rate to 0.
+				rowDTO.setCompletionRate(0);
+			// User has never failed/declined ... but SQL won't divide by 0 so
+			// this the completion rate is null.
+			} else if (row.getCompletionRate() == null) {
+				// Set completion rate to 100
 				rowDTO.setCompletionRate(100);
 			} else {
 				rowDTO.setCompletionRate(row.getCompletionRate());
