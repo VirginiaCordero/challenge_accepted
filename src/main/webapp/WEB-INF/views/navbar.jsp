@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<a class="navbar-brand" href="/dashboard">
-	<img src="/src/main/resources/static/grin.svg" 
-	width="30" height="30" class="d-inline-block align-top" alt="">
+	<img src="resources/static/grin.svg" class="d-inline-block align-top" alt="">
     Challenge Accepted
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
