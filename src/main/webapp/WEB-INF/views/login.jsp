@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Login</title>
+<title>Log In</title>
 <link rel="stylesheet"
 	href="https://bootswatch.com/4/cyborg/bootstrap.css" />
 <!-- Custom CSS goes below Bootstrap CSS -->
@@ -15,19 +15,37 @@
 </head>
 <body>
 <%@ include file="navbar.jsp" %>
-	<h1>Login</h1>
-	
-	<p class="message">${ message }</p>
-	
-	<form action="/login" method="post">
-		<p>
-			<label for="email">Email:</label> <input id="email" name="email" value="${ param.email }" required minlength="2" />
-		</p>		<p>
-			<label for="password">Password:</label> <input id="password" type="password" name="password" required minlength="2" />
-		</p>
-		<p>
-			<button>Submit</button>
-		</p>
-	</form>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 mx-auto">
+				<form action="/registration" method="post" id="fileForm" role="form">
+					<fieldset>
+						<legend class="text-center">
+							<h2>Challenge Accepted</h2> <span class="req"></span>
+							<h6>Challenge your friends to fun and simple competitions.</h6>
+						</legend>
+						<div class="form-group">
+							<label for="email"><span class="req">* </span> Email
+								Address: </label> <input
+								class="form-control" required type="text" name="email" value="${ param.email }" 
+								id="email" />
+							<div class="status" id="status"></div>
+						</div>
+						<div class="form-group">
+							<label for="password"><span class="req">* </span>
+								Password: </label> <input required name="password" type="password"
+								class="form-control inputpass" minlength="4" maxlength="16"
+								id="pass1" /> <label for="password"></label>
+						</div>
+						<div align=center class="form-group">
+							<input class="btn btn-success" type="submit" name="submit_reg"
+								value="Log In"> <a href="/registration"
+								class="btn btn-secondary">Register</a>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
