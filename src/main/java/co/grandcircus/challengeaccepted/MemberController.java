@@ -199,8 +199,8 @@ public class MemberController {
 			Integer displayedChallengeNumFailed = userChallengeDao
 					.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "failed");
 						
-			Integer displayedChallengeDifficulty = (
-					(1 - (displayedChallengeNumCompleted / (displayedChallenge.getGroup().getUsers().size()))) * 100);
+			Long displayedChallengeDifficulty = (
+					Math.round((1 - (displayedChallengeNumCompleted / (displayedChallenge.getGroup().getUsers().size() * 1.0))) * 100));
 
 			// Gets the user statuses for the displayed challenge
 			List<ChallengeStatus> challengeStatuses = userChallengeDao.getChallengeStatuses(displayedChallenge.getId());
