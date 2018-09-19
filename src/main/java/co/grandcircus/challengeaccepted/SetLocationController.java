@@ -26,7 +26,15 @@ public class SetLocationController {
 	private String apiKey;
 	
 	@RequestMapping("/set-location")
-	public ModelAndView showSetLocation() {
+	public ModelAndView showSetLocation(@SessionAttribute(name = "user", required = false) User user,
+			HttpSession session, RedirectAttributes redir) {
+		// For this URL, make sure there is a user on the session.
+				System.out.println("Dashboard " + user);
+				if (user == null) {
+					// if not, send them back to the login page with a message.
+					redir.addFlashAttribute("message", "Wait! Please log in.");
+					return new ModelAndView("redirect:/login");
+				}	
 		ModelAndView mav = new ModelAndView("set-location");
 		return mav;
 	}
@@ -36,7 +44,13 @@ public class SetLocationController {
 									 @SessionAttribute(name = "user", required = false) User user, 
 									 HttpSession session, 
 									 RedirectAttributes redir) {
-		
+		// For this URL, make sure there is a user on the session.
+		System.out.println("Dashboard " + user);
+		if (user == null) {
+			// if not, send them back to the login page with a message.
+			redir.addFlashAttribute("message", "Wait! Please log in.");
+			return new ModelAndView("redirect:/login");
+		}	
 		String location = null;
 		
 		RestTemplate restTemplate = new RestTemplate();

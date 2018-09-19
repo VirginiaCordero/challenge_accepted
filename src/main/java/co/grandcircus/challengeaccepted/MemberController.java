@@ -243,7 +243,6 @@ public class MemberController {
 	@PostMapping("/create-group")
 	public ModelAndView createGroup(@SessionAttribute(name = "user", required = false) User user,
 			RedirectAttributes redir, Group group, HttpSession session) {
-
 		// For this URL, make sure there is a user on the session.
 		if (user == null) {
 			// if not, send them back to the login page with a message.
@@ -302,28 +301,30 @@ public class MemberController {
 
 	@RequestMapping("/challenge-response")
 	public ModelAndView acceptOrDeclineChallenge(@SessionAttribute(name = "user", required = false) User user,
-			@RequestParam("challengeId") Challenge challenge, @RequestParam("response") String response) {
-
+			@RequestParam("challengeId") Challenge challenge, @RequestParam("response") String response, 
+			HttpSession session, RedirectAttributes redir) {
+		// For this URL, make sure there is a user on the session.
+				System.out.println("Dashboard " + user);
+				if (user == null) {
+					// if not, send them back to the login page with a message.
+					redir.addFlashAttribute("message", "Wait! Please log in.");
+					return new ModelAndView("redirect:/login");
+				}
 		UserChallenge userChallenge = null;
 
 		// Check to see if they have previously accepted this challenge
 		userChallenge = userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(), challenge.getId());
-
 		// If it exists, update the row in the table with their outcome
 		if (userChallenge != null) {
-
 			if (response.equalsIgnoreCase("completed")) {
 				userChallenge.setStatus("completed");
 			} else {
 				userChallenge.setStatus("failed");
 			}
-
 			// If not previously accepted, then set details and save a new row in the table
 		} else {
-
 			// Row in the user_challenge Table
 			userChallenge = new UserChallenge();
-
 			// Set all the values
 			userChallenge.setChallenge(challenge); // sets challenge_id
 			userChallenge.setUser(userDao.findById(user.getId()).orElse(null)); // sets user_id
@@ -343,7 +344,14 @@ public class MemberController {
 	}
 
 	@RequestMapping("group-leaderboard")
-	public ModelAndView showGroupLeaderboard(@RequestParam("groupId") Long groupId) {
+	public ModelAndView showGroupLeaderboard(@SessionAttribute(name = "user", required = false) User user,@RequestParam("groupId") Long groupId, HttpSession session, RedirectAttributes redir) {
+		// For this URL, make sure there is a user on the session.
+				System.out.println("Dashboard " + user);
+				if (user == null) {
+					// if not, send them back to the login page with a message.
+					redir.addFlashAttribute("message", "Wait! Please log in.");
+					return new ModelAndView("redirect:/login");
+				}
 		return new ModelAndView("leaderboard", "leaderboard", getGroupLeaderboard(groupId));
 
 	}
