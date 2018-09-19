@@ -217,20 +217,7 @@
 				<p class="card-text">Created: ${ created }</p> --%>
 				</div>
 			</div>
-			<!-- displayed challenge statistics -->
-			<div class="card text-white bg-primary mb-4" style="width: 20rem;">
-				<div class="card-header">Displayed Challenge Statistics</div>
-				<div class="card-body">
-					<p class="card-text">Accepted: ${ displayedChallengeNumAccepts }
-						${ displayedChallengeAcceptList }</p>
-					<p class="card-text">Declined: ${ displayedChallengeNumDeclines }
-						${ displayedChallengeDeclineList }</p>
-					<p class="card-text">Completed: ${ displayedChallengeNumCompleted }
-						${ displayedChallengeCompleteList }</p>
-					<p class="card-text">Failed: ${ displayedChallengeNumFailed }
-						${ displayedChallengeFailList }</p>
-				</div>
-			</div>
+			
 			<!-- your groups -->
 			<div class="card text-white bg-primary mb-4" style="width: 20rem;">
 				<div class="card-header">Your groups</div>
@@ -328,82 +315,11 @@
 				</div>
 			</div>
 		</div>
-		<!--last div-->
-
-		<!-- ==================== Legacy Code, but functional ==================== -->
-		<%-- <p>${ user.firstName }${ user.lastName }</p>
->>>>>>> Stashed changes
-	<p>Your Groups:</p>
-
-	<c:forEach items="${ user.groups }" var="group">
-		<p>${ group.name }</p>
-	</c:forEach>
-
-	<form action="create-group" method="post">
-		<fieldset>
-			<legend>Create a new group</legend>
-			<label for="name">Group Name: </label> <input name="name"> <label
-				for="description">Description: </label> <input name="description">
-			<button type="submit">Submit</button>
-		</fieldset>
-	</form>
-	<form action="/join-group" method="post">
+		
 		<p>
-			<label for="group">Join a Group: </label> <select required id="group"
-				name="group">
-				<option value="">Select Group</option>
-
-				<c:forEach items="${ groups }" var="group">
-					<option value="${ group.id }">${ group.name }</option>
-				</c:forEach>
-			</select>
-			<button type="submit">Join +</button>
+			<a href="/nearby-search">Select Location for a Challenge</a>
 		</p>
-	</form>
-	<form action="/leave-group" method="post">
-		<p>
-			<label for="group">Leave a Group: </label> <select required
-				id="group" name="group">
-				<option value="">Select Group</option>
-
-				<c:forEach items="${ user.groups }" var="group">
-					<option value="${ group.id }">${ group.name }</option>
-				</c:forEach>
-			</select>
-
-			<button type="submit">Leave -</button>
-		</p>
-	</form> --%>
-
-		<%-- <p>Next Challenge: ${ nextChallenge.name } -- ${ nextChallenge.description }</p>
-	<h3>Challenge Details:</h3>
-	<p>${ nextChallengeDetails.detailResult.formattedAddress}</p>
-	<p>${ nextChallengeDetails.detailResult.formattedPhoneNumber}</p>
-	<p>${ nextChallengeDetails.detailResult.openingHours.weekdayText}</p> --%>
-
-		<%-- <c:choose>
-		<c:when test="${ not empty acceptedChallengeExists }">
-			<a
-				href="/challenge-response?response=completed&challengeId=${ nextChallenge.id }">Challenge
-				Completed</a>
-			<a
-				href="/challenge-response?response=failed&challengeId=${ nextChallenge.id }">I
-				Have Failed</a>
-		</c:when>
-		<c:when test="${ not empty nextChallenge }">
-			<a
-				href="/challenge-response?response=accepted&challengeId=${ nextChallenge.id }">Challenge
-				Accepted</a>
-			<a
-				href="/challenge-response?response=declined&challengeId=${ nextChallenge.id }">Nah</a>
-		</c:when>
-		<c:otherwise>
-			<p>Join more groups, loser.</p>
-		</c:otherwise>
-	</c:choose> --%>
-		<!-- <p>
-		<a href="/nearby-search">Select Location for a Challenge</a>
-	</p> -->
+	</div>
 	<script>
 	    $(document).ready(() => {
 	      $(document).on("click", ".drawer", () => {
