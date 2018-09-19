@@ -8,8 +8,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Dashboard</title>
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/cyborg/bootstrap.css" />
+<link rel="stylesheet" href="https://bootswatch.com/4/cyborg/bootstrap.css" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Custom CSS goes below Bootstrap CSS -->
 <link rel="stylesheet" href="/style.css" />
 </head>
@@ -128,38 +128,44 @@
 								</c:otherwise>
 							</c:choose>	
 						</div>
-						<div class="card-header text-center" style="padding-top: 15px;">
-							<h3>Location Details</h3>
-						</div>
-						<div class="row" style="height: 450px; padding-top: 30px">
-							<div class="col-lg-6">
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item">${ nextChallengeDetails.detailResult.name}</li>
-									<li class="list-group-item">${ nextChallengeDetails.detailResult.website}</li>
-									<li class="list-group-item">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</li>								
-									<li class="list-group-item">${ nextChallengeDetails.detailResult.formattedAddress}</li>
-									<li class="list-group-item">
-										<ul style="list-style: none; padding-left: 0px;">
-											<c:forEach var="dailyHours" items="${ nextChallengeDetails.detailResult.openingHours.weekdayText}">
-												<li>${ dailyHours }</li>
-											</c:forEach>
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<div class="col-lg-6" style="opacity: .8;">
-								<iframe width="100%"
-										height="100%"
-										frameborder="0" style="border:0" 
-										src="https://www.google.com/maps/embed/v1/place?key=${ apiKey }&q=place_id:${ nextChallengeDetails.detailResult.placeId }"></iframe>
-							</div>
-						</div>
-							
-					</div>
-					
-					
-					<div class="card-body">
 						
+						<div class="card-header text-center" style="padding-top: 15px;">
+							<button class="btn btn-lg btn-default drawer"
+  								    type="button">Location Details
+  							</button>
+						</div>
+						
+						<div class="collapse" id="collapseExample">
+						
+								<div class="row" style="height: 450px; padding-top: 30px">
+									
+									<div class="col-lg-6">
+									
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item">${ nextChallengeDetails.detailResult.name}</li>
+											<li class="list-group-item">${ nextChallengeDetails.detailResult.website}</li>
+											<li class="list-group-item">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</li>								
+											<li class="list-group-item">${ nextChallengeDetails.detailResult.formattedAddress}</li>
+											<li class="list-group-item">
+												<ul style="list-style: none; padding-left: 0px;">
+													<c:forEach var="dailyHours" items="${ nextChallengeDetails.detailResult.openingHours.weekdayText}">
+														<li>${ dailyHours }</li>
+													</c:forEach>
+												</ul>
+											</li>
+										</ul>
+										
+									</div>
+									
+									<div class="col-lg-6" style="opacity: .8;">
+										<iframe width="100%"
+												height="100%"
+												frameborder="0" style="border:0" 
+												src="https://www.google.com/maps/embed/v1/place?key=${ apiKey }&q=place_id:${ nextChallengeDetails.detailResult.placeId }"></iframe>
+									</div>
+								</div>
+							</div>
+							
 					</div>
 				</div>
 			</c:if>
@@ -398,5 +404,16 @@
 		<!-- <p>
 		<a href="/nearby-search">Select Location for a Challenge</a>
 	</p> -->
+	<script>
+	    $(document).ready(() => {
+	      $(document).on("click", ".drawer", () => {
+	          if ($(".collapse").css("display") === "block") {
+	            $(".collapse").slideUp();
+	          } else {
+	            $(".collapse").slideDown();
+	          }
+	      });
+	    });
+  </script>
 </body>
 </html>

@@ -18,7 +18,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 mx-auto">
-				<form action="/registration" method="post" id="fileForm" role="form">
+				<form action="/login" method="post" id="fileForm" role="form">
 					<fieldset>
 						<legend class="text-center">
 							<h2>Challenge Accepted</h2> <span class="req"></span>
@@ -38,9 +38,7 @@
 								id="pass1" /> <label for="password"></label>
 						</div>
 						<div align=center class="form-group">
-							<input class="btn btn-success" type="submit" name="submit_reg"
-								value="Log In"> <a href="/registration"
-								class="btn btn-secondary">Register</a>
+							<button class="btn btn-success">Log In</button>
 						</div>
 					</fieldset>
 				</form>

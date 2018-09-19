@@ -18,27 +18,27 @@
 	<%@ include file="navbar.jsp"%>
 	<div class="container">
 		<div class="card border-info mb-3 mx-auto" style="max-width: 20rem;">
-<!-- 			<div class="card-header">Set your current Location for new searches</div>
+<!-- 		<div class="card-header">Set your current Location for new searches</div>
  -->			<div class="card-body">
 				<h4 class="card-title">New location</h4>
 				<p class="card-text">In order to create challenges near you, we
 					need you to share your location with us. Don't worry. It's in a
 					safe place.</p>
 				<div class="form-group row mx-auto">
-				<form method="post" action="/set-location" id="location-form"
-					class="form-inline my-2 my-lg-0" role="form">
+				<form method="post" action="/set-location" id="location-form" class="form-inline my-2 my-lg-0" role="form">
 					<!-- <input hidden id="location" value="" name="location"> -->
-					<label for="zipcode">Zipcode</label> 
-					<div class="col-sm-9">
-					<input class="form-control" type="text" placeholder="1234"required id="zipcode"
-						name="zipcode">
+						<label for="zipcode">Zipcode</label> 
+						<div class="col-sm-9">
+							<input class="form-control" type="text" required id="zipcode" name="zipcode">
 						</div>
-					</div>
-					<div class="form-group row mx-auto">
-					<button type="button" class="btn btn-success mx-auto">Set Location</button>
+						<div class="form-group row mx-auto">
+						<button class="btn btn-success mx-auto">Set Location</button>
 					</div>		
 				</form>
 			</div>
+		</div>
+	</div>
+	</div>
 			<!-- <button onclick="getLocation()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Save My Current Location!</button> -->
 			<script>
 				let x = document.getElementById("location");

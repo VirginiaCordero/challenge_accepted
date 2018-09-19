@@ -65,9 +65,8 @@
 							</label><span class="req">* </span>
 						</div>
 						<div align=center class="form-group">
-							<input class="btn btn-success" type="submit" name="submit_reg"
-								value="Register"> <a href="/index"
-								class="btn btn-secondary">Cancel</a>
+							<button class="btn btn-success">Register</button>
+							<a class="btn btn-default" href="/">Cancel</a>
 						</div>
 					</fieldset>
 				</form>
