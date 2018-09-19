@@ -24,3 +24,7 @@
 	width: 500px;
     height: 250px;
 }
+
+#registerbutton {
+	.mr-md-3;
+}

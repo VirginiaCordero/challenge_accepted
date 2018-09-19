@@ -29,8 +29,7 @@
 			<button>Submit!</button>
 		</form>
 		<!-- <button onclick="getLocation()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Save My Current Location!</button> -->
-		<p>Sometimes this can take a few seconds...</p>
-		<div class="loader"></div>
+		
 		<script>
 			let x = document.getElementById("location");
 			
