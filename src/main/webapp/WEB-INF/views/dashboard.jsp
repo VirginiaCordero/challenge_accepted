@@ -15,28 +15,93 @@
 </head>
 <body>
 	<%@ include file="navbar.jsp"%>
-	<div class="container">
+	<div class="container" style="margin-top: 30px;">
 		<!-- dashboard header -->
-		<div class="card-columns">
+		<div class="rows">
 			<div class="card mb-3">
-				<h4 class="card-header">Next challenge</h4>
-				<div class="card-body">
-					<h5 class="card-title">${ nextChallenge.name }</h5>
-					<h6 class="card-subtitle text-muted">${ nextChallenge.description }</h6>
+				<div class="card-header" style="background: url(https://maps.googleapis.com/maps/api/place/photo?maxwidth=5000&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=${ apiKey });
+												background-size: cover;
+												color: white;
+												height:600px;">
+				<div style="margin-top: 440px;
+							background-color: rgba(70, 70, 70, 0.6);
+							border-radius: 10px;
+							padding: 10px;">
+					<h3>Next Challenge: ${ nextChallenge.name }</h3>
+					<h5>from ${ nextChallenge.user.firstName } ${ nextChallenge.user.lastName } | to ${ nextChallenge.group.name }</h5>
 				</div>
-				<img style="height: 200px; width: 100%; display: block;"
-					class="card-img-top"
-					src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference=${ nextChallengeDetails.detailResult.photos.get(0).photoReference }&key=${ apiKey }"
-					alt="Card image cap">
-<!-- 				<div class="card-body">
-					<h3 class="card-title">Challenge Details</h3>
-				</div> -->
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">${ nextChallengeDetails.detailResult.name}</li>
-					<li class="list-group-item">${ nextChallengeDetails.detailResult.formattedAddress}</li>
-					<li class="list-group-item">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</li>
-					<li class="list-group-item">${ nextChallengeDetails.detailResult.openingHours.weekdayText}</li>
-				</ul>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="card-header text-center col-lg-6">
+							<h4>REQUIREMENTS:</h4>
+							<h5 class="text-muted">${ nextChallenge.description }</h5>
+						</div>
+						<div class="card-header text-center col-lg-6">
+							<h4>DIFFICULTY:</h4>
+							<h5 class="text-muted">${ displayedChallengeDifficulty }/100</h5>
+						</div>
+					</div>
+					
+					<div class="row" style="margin-top: 30px;">
+						<div class="col-lg-3 text-center">
+							<h3>${ displayedChallengeNumCompleted }</h3>
+							<h5>Completed</h5>
+							<ul class="text-muted" style="list-style: none; padding-left: 0;">
+								<c:forEach var="userName" items="${ displayedChallengeCompleteList }">
+									<li>${ userName }</li>
+								</c:forEach>
+							</ul>
+						</div>
+						<div class="col-lg-3 text-center">
+							<h3>${ displayedChallengeNumAccepts }</h3>
+							<h5>Accepted</h5>
+							<ul class="text-muted" style="list-style: none; padding-left: 0;">
+								<c:forEach var="userName" items="${ displayedChallengeAcceptList }">
+									<li>${ userName }</li>
+								</c:forEach>
+							</ul>
+						</div>
+						<div class="col-lg-3 text-center">
+							<h3>${ displayedChallengeNumDeclines }</h3>
+							<h5>Declined</h5>
+							<ul class="text-muted" style="list-style: none; padding-left: 0;">
+								<c:forEach var="userName" items="${ displayedChallengeDeclineList }">
+									<li>${ userName }</li>
+								</c:forEach>
+							</ul>
+						</div>
+						<div class="col-lg-3 text-center">
+							<h3>${ displayedChallengeNumFailed }</h3>
+							<h5>Failed</h5>
+							<ul class="text-muted" style="list-style: none; padding-left: 0;">
+								<c:forEach var="userName" items="${ displayedChallengeFailList }">
+									<li>${ userName }</li>
+								</c:forEach>
+							</ul>
+						</div>
+					</div>
+					<%-- <ul class="list-group list-group-flush col-4">
+						<li class="list-group-item">${ nextChallenge.group.name}</li>
+						<li class="list-group-item">${ nextChallenge.group.description}</li>
+						<li class="list-group-item">Current Rank: ${ displayedChallengeGroupRank }</li>
+					</ul> --%>
+					<div class="card-body">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">${ nextChallengeDetails.detailResult.name}</li>
+							<li class="list-group-item">${ nextChallengeDetails.detailResult.formattedAddress}</li>
+							<li class="list-group-item">${ nextChallengeDetails.detailResult.formattedPhoneNumber}</li>
+							<li class="list-group-item">
+								<ul style="list-style: none; padding-left: 0px;">
+									<c:forEach var="dailyHours" items="${ nextChallengeDetails.detailResult.openingHours.weekdayText}">
+										<li>${ dailyHours }</li>
+									</c:forEach>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				
+				
 				<div class="card-body">
 					<c:choose>
 						<c:when test="${ not empty acceptedChallengeExists }">
@@ -60,6 +125,9 @@
 					</c:choose>
 				</div>
 			</div>
+		</div>
+		<div class="card-columns">
+			
 			<!-- <div class="card text-white bg-primary mb-4" style="width: 20rem;">
 			<div class="card-body">
 				<h3 class="card-title">Dashboard</h3>

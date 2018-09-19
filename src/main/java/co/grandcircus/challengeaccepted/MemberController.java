@@ -72,8 +72,26 @@ public class MemberController {
 		Challenge displayedChallenge = null;
 		PlaceDetailResult placeDetailResult = null;
 
-		// Initialize a boolean for whethe or not the user belongs to any groups.
+		// Initialize a boolean for whether or not the user belongs to any groups.
 		boolean userHasGroups = user.getGroups() != null && !user.getGroups().isEmpty();
+		
+		// If the user has groups, look for the correct challenge to display
+		if (userHasGroups) {
+			// if user has an accepted challenge
+			if (acceptedChallenge != null) {
+				displayedChallenge = acceptedChallenge.getChallenge();
+			} else {
+				// Get list of user's challenges and look for a "fresh" challenge
+				List<Challenge> myChallenges = challengeDao.findByGroupInOrderByCreationDateAsc(user.getGroups());
+				for (Challenge challenge : myChallenges) {
+					if (userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(),
+							challenge.getId()) == null) {
+						displayedChallenge = challenge;
+						break;
+					}
+				}
+			}
+		}
 
 		// If the user has groups, calculate the user's rank in each group and store
 		// details about each of those groups
@@ -104,28 +122,22 @@ public class MemberController {
 				usersGroupsInfo.add(userGroupInfoDTO);
 
 			}
-
-			// Add all information about all the user's groups to the ModelAndView
-			mav.addObject("usersGroupsInfo", usersGroupsInfo);
-
-		}
-
-		if (userHasGroups) {
-			// if user has an accepted challenge
-			if (acceptedChallenge != null) {
-				displayedChallenge = acceptedChallenge.getChallenge();
-			} else {
-				// Get list of user's challenges and look for a "fresh" challenge
-				List<Challenge> myChallenges = challengeDao.findByGroupInOrderByCreationDateAsc(user.getGroups());
-				for (Challenge challenge : myChallenges) {
-					if (userChallengeDao.findByUserIdEqualsAndChallengeIdEquals(user.getId(),
-							challenge.getId()) == null) {
-						displayedChallenge = challenge;
-						break;
+			
+			Integer displayedChallengeGroupRank = 0;
+			for (UserGroupInfoDTO group : usersGroupsInfo) {
+				if (displayedChallenge!=null) {
+					if (displayedChallenge.getGroup().getName().equalsIgnoreCase(group.getName())) {
+						displayedChallengeGroupRank = group.getUserRank();
 					}
 				}
 			}
+
+			// Add all information about all the user's groups to the ModelAndView
+			mav.addObject("usersGroupsInfo", usersGroupsInfo);
+			mav.addObject("displayedChallengeGroupRank", displayedChallengeGroupRank);
+
 		}
+
 
 		if (displayedChallenge != null) {
 
@@ -156,9 +168,6 @@ public class MemberController {
 			if ((completed != 0 || failed != 0)) {
 				// calculate user's complete:fail ratio
 				Double completeFailRatio = completed / ((total - declined) * 1.0); // hacky way to get a double
-				System.out.println(completed);
-				System.out.println(total);
-				System.out.println(failed);
 				mav.addObject("completeFailRatio", completeFailRatio);
 			}
 
@@ -189,6 +198,9 @@ public class MemberController {
 					.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "completed");
 			Integer displayedChallengeNumFailed = userChallengeDao
 					.countByChallengeIdAndStatusIs(displayedChallenge.getId(), "failed");
+						
+			Integer displayedChallengeDifficulty = (
+					(1 - (displayedChallengeNumCompleted / (displayedChallenge.getGroup().getUsers().size()))) * 100);
 
 			// Gets the user statuses for the displayed challenge
 			List<ChallengeStatus> challengeStatuses = userChallengeDao.getChallengeStatuses(displayedChallenge.getId());
@@ -212,15 +224,15 @@ public class MemberController {
 
 			}
 
-			mav.addObject("displayedChallengeAcceptList", accepted);
-			mav.addObject("displayedChallengeDeclineList", declined);
-			mav.addObject("displayedChallengeCompleteList", completed);
-			mav.addObject("displayedChallengeFailList", failed);
-
 			mav.addObject("displayedChallengeNumAccepts", displayedChallengeNumAccepts);
 			mav.addObject("displayedChallengeNumDeclines", displayedChallengeNumDeclines);
 			mav.addObject("displayedChallengeNumCompleted", displayedChallengeNumCompleted);
 			mav.addObject("displayedChallengeNumFailed", displayedChallengeNumFailed);
+			mav.addObject("displayedChallengeDifficulty", displayedChallengeDifficulty);
+			mav.addObject("displayedChallengeAcceptList", accepted);
+			mav.addObject("displayedChallengeDeclineList", declined);
+			mav.addObject("displayedChallengeCompleteList", completed);
+			mav.addObject("displayedChallengeFailList", failed);
 
 		}
 		mav.addObject("apiKey", apiKey);
