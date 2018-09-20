@@ -162,11 +162,11 @@ public class MemberController {
 			Integer failed = userChallengeDao.countByUserIdEqualsAndStatusIs(user.getId(), "failed");
 
 			// calculate user's accept:decline ratio
-			Double acceptDeclineRatio = (total - declined) / (total * 1.0); // hacky way to get a double
+			Long acceptDeclineRatio = Math.round(((total - declined) / (total * 1.0)) * 100);
 
 			if ((completed != 0 || failed != 0)) {
 				// calculate user's complete:fail ratio
-				Double completeFailRatio = completed / ((total - declined) * 1.0); // hacky way to get a double
+				Long completeFailRatio = Math.round((completed / ((total - declined) * 1.0)) * 100);
 				mav.addObject("completeFailRatio", completeFailRatio);
 			}
 

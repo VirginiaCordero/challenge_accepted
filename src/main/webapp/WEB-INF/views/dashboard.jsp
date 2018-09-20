@@ -19,6 +19,102 @@
 		<a class="btn btn-lg btn-secondary mb-3" style="width: 100%" href="/nearby-search">CREATE CHALLENGE</a>
 		
 		<!-- dashboard header -->
+		<div class="card mb-3">	
+			<h4 class="card-title card-header text-center">Welcome back, ${ user.firstName } :)</h4>
+			<div class="row card-header d-flex justify-content-around" style="padding-top: 30px;">
+				
+				<div class="col-lg-2 text-center">
+					<c:choose>
+						<c:when test="${ not empty created }">
+							<h3>${ created }</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>0</h3>
+						</c:otherwise>
+					</c:choose>
+					<h5>Created</h5>
+				</div>
+				
+				<div class="col-lg-2 text-center">
+					<c:choose>
+						<c:when test="${ not empty accepted }">
+							<h3>${ accepted }</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>0</h3>
+						</c:otherwise>
+					</c:choose>
+					<h5>Accepted</h5>
+				</div>
+				
+				<div class="col-lg-2 text-center">
+					<c:choose>
+						<c:when test="${ not empty completed }">
+							<h3>${ completed }</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>0</h3>
+						</c:otherwise>
+					</c:choose>
+					<h5>Completed</h5>
+				</div>
+				
+				<div class="col-lg-2 text-center">
+					<c:choose>
+						<c:when test="${ not empty declined }">
+							<h3>${ declined }</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>0</h3>
+						</c:otherwise>
+					</c:choose>
+					<h5>Declined</h5>
+				</div>
+				
+				<div class="col-lg-2 text-center">
+					<c:choose>
+						<c:when test="${ not empty failed }">
+							<h3>${ failed }</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>0</h3>
+						</c:otherwise>
+					</c:choose>
+					<h5>Failed</h5>
+				</div>
+		
+			</div>
+			
+			<div class="row card-header d-flex justify-content-around" style="padding-top: 30px;">
+			
+				<div class="col-lg-3 text-center">
+					<c:choose>
+						<c:when test="${ not empty acceptDeclineRatio }">
+							<h3>${ acceptDeclineRatio }%</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>0%</h3>
+						</c:otherwise>
+					</c:choose>
+					<h5>Acceptabilityness</h5>
+				</div>
+				
+				<div class="col-lg-3 text-center">
+					<c:choose>
+						<c:when test="${ not empty completeFailRatio }">
+							<h3>${ completeFailRatio }%</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>0%</h3>
+						</c:otherwise>
+					</c:choose>
+					<h5>Completionisticness</h5>
+				</div>
+			
+			</div>
+			
+		</div>
+		
 		<div>
 			<c:if test="${ not empty nextChallenge }">
 				<div class="card mb-3">
@@ -60,6 +156,7 @@
 									</c:forEach>
 								</ul>
 							</div>
+							
 							<div class="col-lg-2 text-center">
 								<h3>${ displayedChallengeNumAccepts }</h3>
 								<h5>Accepted</h5>
@@ -69,6 +166,7 @@
 									</c:forEach>
 								</ul>
 							</div>
+							
 							<div class="col-lg-4 text-center">
 								<c:choose>
 									<c:when test="${ not empty displayedChallengeGroupRank }">
@@ -81,6 +179,7 @@
 								<h5>Your Rank In</h5>
 								<h5><a href="/group-leaderboard?groupId=${ nextChallenge.group.id }">${ nextChallenge.group.name }</a></h5>
 							</div>
+							
 							<div class="col-lg-2 text-center">
 								<h3>${ displayedChallengeNumDeclines }</h3>
 								<h5>Declined</h5>
@@ -90,6 +189,7 @@
 									</c:forEach>
 								</ul>
 							</div>
+							
 							<div class="col-lg-2 text-center">
 								<h3>${ displayedChallengeNumFailed }</h3>
 								<h5>Failed</h5>
@@ -100,6 +200,7 @@
 								</ul>
 							</div>
 						</div>
+						
 						<div class="row card-header" style="padding-top: 30px; padding-bottom: 30px;">
 							<c:choose>
 								<c:when test="${ not empty acceptedChallengeExists }">
@@ -178,8 +279,7 @@
 		</div>
 		
 			<!-- welcome -->
-			<%-- <div class="card text-white bg-primary mb-3"
-				style="max-width: 20rem;">
+			<%-- <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
 				<div class="card-header">Welcome ${ user.firstName } ${ user.lastName }</div>
 				<div class="card-body">
 					<div class="progress">
@@ -206,14 +306,7 @@
 							style="width: ${ failed }%" aria-valuenow="100" aria-valuemin="0"
 							aria-valuemax="100"></div>
 					</div>
-								<h4 class="card-title">Your Stats</h4>
-				<p class="card-text">Accepted: ${ accepted }:</p>
-				<p class="card-text">Declined: ${ declined }:</p>
-				<p class="card-text">Completed: ${ completed }</p>
-				<p class="card-text">Failed: ${ failed }</p>
-				<p class="card-text">Acceptability: ${ acceptDeclineRatio }</p>
-				<p class="card-text">Completionistabilityness: ${ completeFailRatio }</p>
-				<p class="card-text">Created: ${ created }</p>
+				
 				</div>
 			</div> --%>
 			
@@ -335,7 +428,6 @@
 		          }
 		      });
 		    });
-  		</script>
-		
+  		</script>	
 	</body>
 </html>
