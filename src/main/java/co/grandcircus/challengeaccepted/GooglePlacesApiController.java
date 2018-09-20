@@ -61,8 +61,8 @@ public class GooglePlacesApiController {
 
 		NearbySearchResults nearbySearchResults = restTemplate.getForObject(url, NearbySearchResults.class);
 
-		String embeddedMapUrl = "https://www.google.com/maps/embed/v1/search?" + "key=" + apiKey + "&q=" + keyword
-				+ "&center=" + location;
+		String embeddedMapUrl = "https://www.google.com/maps/embed/v1/search?" + "&q=" + keyword
+				+ "&center=" + location + "&zoom=11" + "&key=" + apiKey;
 
 		ModelAndView mav = new ModelAndView("nearby-search");
 		mav.addObject("nearbySearchResults", nearbySearchResults);
