@@ -20,7 +20,10 @@
 		
 		<!-- dashboard header -->
 		<div class="card mb-3">	
-			<h4 class="card-title card-header text-center">Welcome back, ${ user.firstName } :)</h4>
+			<div class="card-title card-header text-center">
+				<h4>Welcome back, ${ user.firstName } :)</h4>
+				<h5 class="text-muted">- Go Do Something -</h5>
+			</div>
 			<div class="row card-header d-flex justify-content-around" style="padding-top: 30px;">
 				
 				<div class="col-lg-2 text-center">
