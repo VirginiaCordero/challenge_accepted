@@ -16,6 +16,8 @@
 <body>
 	<%@ include file="navbar.jsp"%>
 	<div class="container" style="margin-top: 30px;">
+		<a class="btn btn-lg btn-secondary mb-3" style="width: 100%" href="/nearby-search">CREATE CHALLENGE</a>
+		
 		<!-- dashboard header -->
 		<div>
 			<c:if test="${ not empty nextChallenge }">
@@ -107,7 +109,7 @@
 											Completed</a>
 									</div>
 									<div class="col-lg-6 text-center">								
-										<a class="btn btn-lg btn-default" role="button"
+										<a class="btn btn-lg btn-light" role="button"
 											href="/challenge-response?response=failed&challengeId=${ nextChallenge.id }">I
 											Have Failed</a>
 									</div>
@@ -130,9 +132,7 @@
 						</div>
 						
 						<div class="card-header text-center" style="padding-top: 15px;">
-							<button class="btn btn-lg btn-default drawer"
-  								    type="button">Location Details
-  							</button>
+							<button class="btn btn-lg btn-secondary drawer">Location Details</button>
 						</div>
 						
 						<div class="collapse" id="collapseExample">
@@ -171,15 +171,14 @@
 			</c:if>
 			<c:if test="${ empty nextChallenge }">
 				<div class="text-center">
-					<h3>No New Challenges.</h3>
-					<h5>Join More Groups or Create Your Own Challenge!</h5>
+					<h3 class="text-muted">No New Challenges.</h3>
+					<h5 class="text-muted">Join More Groups or Create Your Own Challenge!</h5>
 				</div>
 			</c:if>
 		</div>
-		<div class="card-columns">
-			
+		
 			<!-- welcome -->
-			<div class="card text-white bg-primary mb-3"
+			<%-- <div class="card text-white bg-primary mb-3"
 				style="max-width: 20rem;">
 				<div class="card-header">Welcome ${ user.firstName } ${ user.lastName }</div>
 				<div class="card-body">
@@ -207,129 +206,136 @@
 							style="width: ${ failed }%" aria-valuenow="100" aria-valuemin="0"
 							aria-valuemax="100"></div>
 					</div>
-					<%-- 			<h4 class="card-title">Your Stats</h4>
+								<h4 class="card-title">Your Stats</h4>
 				<p class="card-text">Accepted: ${ accepted }:</p>
 				<p class="card-text">Declined: ${ declined }:</p>
 				<p class="card-text">Completed: ${ completed }</p>
 				<p class="card-text">Failed: ${ failed }</p>
 				<p class="card-text">Acceptability: ${ acceptDeclineRatio }</p>
 				<p class="card-text">Completionistabilityness: ${ completeFailRatio }</p>
-				<p class="card-text">Created: ${ created }</p> --%>
+				<p class="card-text">Created: ${ created }</p>
 				</div>
-			</div>
+			</div> --%>
 			
 			<!-- your groups -->
-			<div class="card text-white bg-primary mb-4" style="width: 20rem;">
-				<div class="card-header">Your groups</div>
-				<div class="card-body">
-					<ul class="list-group">
-						<c:forEach items="${ usersGroupsInfo }" var="group">
-							<li
-								class="list-group-item d-flex justify-content-between align-items-center">${ group.name }:${ group.description }</li>
-							<li
-								class="list-group-item d-flex justify-content-between align-items-center">Rank:
-								${ group.userRank } out of ${ group.numMembers }</li>
-							<li
-								class="list-group-item d-flex justify-content-between align-items-center">
-								<a class="btn btn-info" role="button"
-								href="/group-leaderboard?groupId=${ group.id }"> See Group
-									Leaderboard!</a>
-							</li>
-						</c:forEach>
-					</ul>
-				</div>
+			<h3 class="text-center text-muted">Your Ranking</h3>
+			<div class="row d-flex justify-content-around">		
+				<c:forEach items="${ usersGroupsInfo }" var="group">
+					<div class="card ml-1 mr-1 mb-3" style="width: 20rem">
+						<div class="card-header text-center">
+							<h5>${ group.name }</h5>
+							<p class="text-muted text-center">${ group.description }</p>
+						</div>
+						<div class="card-body text-center flush">
+							<c:choose>
+								<c:when test="${ not empty group.userRank }">
+									<p>You are ranked</p>
+									<p>No. ${ group.userRank } of ${ group.numMembers }</p>
+								</c:when>
+								<c:otherwise>
+									<p class="text-muted">No Rank Yet<p>
+								</c:otherwise>
+								</c:choose>
+								<a class="card-link" role="button" href="/group-leaderboard?groupId=${ group.id }">Leaderboard</a>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
-			<!--  create a new group -->
-			<div class="card text-white bg-primary mb-4" style="width: 20rem;">
-				<div class="card-header">Create a new group</div>
-				<div class="card-body">
-					<form action="create-group" method="post">
-						<div class="form-group row">
-							<label for="name" class="col-sm-9 col-form-label">Group</label>
-							<div class="col-sm-9">
-								<input name="name" class="form-control"
-									placeholder="What is the group name?">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="description" class="col-sm-9 col-form-label">Description</label>
-							<div class="col-sm-9">
-								<input name="description" class="form-control"
-									placeholder="What is your group about?">
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-sm-7">
-								<button type="submit" class="btn btn-warning">Submit</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-			<!--  join a group -->
-			<div class="card text-white bg-primary mb-4" style="width: 20rem;">
-				<div class="card-header">Join a new group</div>
-				<div class="card-body">
-					<form action="/join-group" method="post">
-						<div class="form-group row">
-							<div class="input-group col-sm-9">
-								<select required id="group" name="group" class="custom-select"
-									id="inputGroupSelect01">
-									<option value="">Select Group</option>
+			
+			<h3 class="text-center text-muted">Manage Your Groups</h3>
+			<div class="row d-flex justify-content-around">
+				
+				<!-- join a group -->
+				<div class="card ml-1 mr-1 mb-3 text-center" style="width: 20rem; height: 370px">
+					<div class="card-header">
+						<h5>Join a new group</h5>
+					</div>
+					<div class="card-body text-center">
+						<form action="/join-group" method="post">
+							<div class="form-group text-center">
+								<label for="name" class="col-form-label">Group Name</label>								
+								<select required id="group" name="group" class="custom-select" id="inputGroupSelect01">
+									<option value="">Select a Group</option>
 									<c:forEach items="${ groups }" var="group">
 										<option value="${ group.id }">${ group.name }</option>
 									</c:forEach>
 								</select>
 							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-sm-7">
-								<button type="submit" class="btn btn-success">Join +</button>
+							<div class="form-group text-center">
+								<button type="submit" class="btn btn-info">Join +</button>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
-			</div>
-			<!--  leave a group -->
-			<div class="card text-white bg-primary mb-4" style="width: 20rem;">
-				<div class="card-header">Leave a group</div>
-				<div class="card-body">
-					<form action="/leave-group" method="post">
-						<div class="form-group row">
-							<div class="col-sm-9">
-								<select required id="group" name="group" class="custom-select"
-									id="inputGroupSelect01">
-									<option value="">Select Group</option>
+				
+				<!-- create a group -->
+				<div class="card ml-1 mr-1 mb-3 text-center" style="width: 20rem; height: 370px">
+					<div class="card-header">
+						<h5>Create a new group</h5>
+					</div>
+					<div class="card-body text-center">
+						<form action="create-group" method="post">
+							<div class="form-group text-center">
+								<label for="name" class="col-form-label">Group Name</label>
+								<div>
+									<input name="name" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+									<label for="description" class="col-form-label">Description</label>
+								<div>
+									<input name="description" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<div>
+									<button type="submit" class="btn btn-warning">Submit</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+				<!-- leave a group! -->
+				<div class="card ml-1 mr-1 mb-3 text-center" style="width: 20rem; height: 370px">
+					<div class="card-header">
+						<h5>Leave a group</h5>
+					</div>
+					<div class="card-body text-center">
+						<form action="/leave-group" method="post">
+							<div class="form-group text-center">
+								<label for="name" class="col-form-label">Group Name</label>								
+								<select required id="group" name="group" class="custom-select" id="inputGroupSelect01">
+									<option value="">Select a Group</option>
 									<c:forEach items="${ user.groups }" var="group">
 										<option value="${ group.id }">${ group.name }</option>
 									</c:forEach>
 								</select>
 							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-sm-7">
-								<button type="submit" class="btn btn-danger">Leave -</button>
+							<div class="form-group text-center">
+								<div>
+									<button type="submit" class="btn btn-secondary">Leave</button>
+								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
+				
 			</div>
+			
 		</div>
 		
-		<p>
-			<a href="/nearby-search">Select Location for a Challenge</a>
-		</p>
-	</div>
-	<script>
-	    $(document).ready(() => {
-	      $(document).on("click", ".drawer", () => {
-	          if ($(".collapse").css("display") === "block") {
-	            $(".collapse").slideUp();
-	          } else {
-	            $(".collapse").slideDown();
-	          }
-	      });
-	    });
-  </script>
-</body>
+		<script>
+		    $(document).ready(() => {
+		      $(document).on("click", ".drawer", () => {
+		          if ($(".collapse").css("display") === "block") {
+		            $(".collapse").slideUp();
+		          } else {
+		            $(".collapse").slideDown();
+		          }
+		      });
+		    });
+  		</script>
+		
+	</body>
 </html>

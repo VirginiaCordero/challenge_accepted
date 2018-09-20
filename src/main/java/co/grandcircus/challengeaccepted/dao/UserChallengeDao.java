@@ -50,7 +50,7 @@ public interface UserChallengeDao extends JpaRepository<UserChallenge, Long> {
 			"    SUM(`status`='completed') AS completed," + 
 			"    SUM(`status`= 'declined') AS declined," + 
 			"    SUM(`status`='failed') AS failed," + 
-			"    Floor((SUM(`status`='completed') / (SUM(`status`='declined') + SUM(`status`='failed')) * 100)) AS completionRate" + 
+			"    Floor((SUM(`status`='completed') / (SUM(`status`='declined') + SUM(`status`='failed') + SUM(`status`='completed')) * 100)) AS completionRate" + 
 			"		FROM (" + 
 			"			SELECT user_challenge.user_id, `user`.first_name, `user`.last_name, user_challenge.`status` FROM user_challenge" + 
 			"				JOIN `user` ON user_challenge.user_id=`user`.id" + 

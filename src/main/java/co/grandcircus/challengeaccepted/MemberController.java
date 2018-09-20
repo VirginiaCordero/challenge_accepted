@@ -52,7 +52,6 @@ public class MemberController {
 	public ModelAndView showDashboard(@SessionAttribute(name = "user", required = false) User user,
 			RedirectAttributes redir) {
 		// For this URL, make sure there is a user on the session.
-		System.out.println("Dashboard " + user);
 		if (user == null) {
 			// if not, send them back to the login page with a message.
 			redir.addFlashAttribute("message", "Wait! Please log in.");

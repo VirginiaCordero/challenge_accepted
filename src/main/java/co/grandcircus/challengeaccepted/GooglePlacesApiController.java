@@ -45,7 +45,7 @@ public class GooglePlacesApiController {
 			return new ModelAndView("redirect:/login");
 		}
 		String location = user.getLocation();
-		Integer radius = 2000;
+		Integer radius = 4000;
 
 		RestTemplate restTemplate = new RestTemplate();
 		String url = null;
